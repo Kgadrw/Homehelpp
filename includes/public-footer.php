@@ -49,10 +49,10 @@ $logo = rtrim(BASE_URL, '/') . '/Image/homehelp-logo.png';
       <div class="footer-col">
         <h5>Account</h5>
         <ul class="footer-links">
-          <li><a href="<?= BASE_URL ?>/login" data-open-login>Login</a></li>
-          <li><a href="<?= BASE_URL ?>/register" data-open-register>Register</a></li>
-          <li><a href="<?= BASE_URL ?>/worker-login" data-open-worker-login>Job Seeker Login</a></li>
-          <li><a href="<?= BASE_URL ?>/worker-register">Job Seeker Register</a></li>
+          <li><a href="<?= BASE_URL ?>/worker-login" data-open-worker-login>Login</a></li>
+          <li><a href="<?= BASE_URL ?>/worker-register" data-open-worker-register>Register</a></li>
+          <li><a href="<?= BASE_URL ?>/login" data-open-login>Hire Login</a></li>
+          <li><a href="<?= BASE_URL ?>/register" data-open-register>Hire Register</a></li>
           <li><a href="<?= BASE_URL ?>/admin-login">Admin Login</a></li>
           <li><a href="<?= BASE_URL ?>/staff-login">Team Login</a></li>
         </ul>
@@ -72,7 +72,10 @@ $logo = rtrim(BASE_URL, '/') . '/Image/homehelp-logo.png';
 </script>
 <?php
 include __DIR__ . '/worker-login-modal.php';
+include __DIR__ . '/worker-register-modal.php';
 include __DIR__ . '/client-login-modal.php';
 include __DIR__ . '/register-modal.php';
 include __DIR__ . '/book-modal.php';
+$__hh_assets = rtrim(defined('BASE_URL') ? BASE_URL : '', '/');
 ?>
+<script src="<?= htmlspecialchars($__hh_assets) ?>/assets/js/glass-select.js" defer></script>

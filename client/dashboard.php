@@ -71,13 +71,13 @@ $page_title    = 'Dashboard';
 include '../includes/dash-head.php';
 ?>
 <style>
-.success-banner{background:var(--success-bg);border:1px solid #A7F3D0;border-radius:var(--radius);padding:14px 18px;margin-bottom:20px;display:flex;align-items:center;gap:14px;animation:slideDown .35s ease both}
-.success-banner-icon{width:38px;height:38px;border-radius:50%;background:#D1FAE5;color:#047857;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.success-banner{background:var(--success-bg);border:none;border-radius:var(--radius);padding:14px 18px;margin-bottom:20px;display:flex;align-items:center;gap:14px;animation:slideDown .35s ease both;backdrop-filter:blur(14px)}
+.success-banner-icon{width:38px;height:38px;border-radius:50%;background:rgba(16,185,129,.22);color:#6EE7B7;display:flex;align-items:center;justify-content:center;flex-shrink:0}
 .success-banner-icon i{width:18px;height:18px}
 .success-banner-body{flex:1;min-width:0}
-.success-banner-body strong{display:block;font-size:.9rem;font-weight:700;color:#047857;margin-bottom:2px}
-.success-banner-body span{font-size:.82rem;color:#047857}
-.success-banner-close{background:none;border:none;cursor:pointer;color:#047857;padding:4px;display:flex;opacity:.7}
+.success-banner-body strong{display:block;font-size:.9rem;font-weight:700;color:#6EE7B7;margin-bottom:2px}
+.success-banner-body span{font-size:.82rem;color:#6EE7B7}
+.success-banner-close{background:none;border:none;cursor:pointer;color:#6EE7B7;padding:4px;display:flex;opacity:.7}
 .success-banner-close:hover{opacity:1}
 .success-banner-close i{width:18px;height:18px}
 @keyframes slideDown{from{opacity:0;transform:translateY(-8px)}to{opacity:1;transform:translateY(0)}}
@@ -87,7 +87,7 @@ include '../includes/dash-head.php';
 .service-name{font-weight:600;font-size:.86rem;color:var(--text)}
 .service-date{font-size:.75rem;color:var(--soft);margin-top:1px}
 .bookings-table td.date-cell{font-size:.83rem;color:var(--muted);white-space:nowrap}
-.status-pill.cancelled{background:#F3F4F6;color:#6B7280}
+.status-pill.cancelled{background:rgba(255,255,255,.1);color:rgba(255,255,255,.55)}
 .status-pill.hold{background:var(--warning-bg);color:#B45309}
 .count-chip{font-size:.72rem;background:var(--navy-soft);color:var(--navy);padding:3px 10px;border-radius:99px;font-weight:700}
 .notif-list{display:flex;flex-direction:column;margin:-16px -18px}
@@ -100,7 +100,7 @@ include '../includes/dash-head.php';
 .notif-time{font-size:.72rem;color:var(--soft)}
 .notif-empty{text-align:center;padding:24px 8px;font-size:.85rem;color:var(--muted)}
 .notif-empty i{display:block;width:28px;height:28px;margin:0 auto 8px;color:var(--soft)}
-.btn-inline{display:inline-flex;align-items:center;gap:7px;padding:10px 18px;border-radius:10px;background:var(--navy);color:#fff;font-size:.86rem;font-weight:700}
+.btn-inline{display:inline-flex;align-items:center;gap:7px;padding:10px 18px;border-radius:10px;background:rgba(255,255,255,.18);color:#fff;font-size:.86rem;font-weight:700}
 .btn-inline:hover{background:var(--navy-mid)}
 .btn-inline i{width:15px;height:15px}
 .two-col{margin-bottom:0}

@@ -19,68 +19,169 @@ require_once __DIR__ . '/PHPMailer/SMTP.php';
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception as PHPMailerException;
 
-// ── CONFIG ────────────────────────────────────────────────────
+// ── CONFIG (from .env via config.php / env.php) ───────────────
+if (!defined('SMTP_HOST')) {
+    require_once __DIR__ . '/../config/env.php';
+}
 $_MAILER_CONFIG = [
-    'smtp_host' => 'mail.homehelp.rw',
-    'smtp_port' => 465,
-    'smtp_user' => 'bookings@homehelp.rw',
-    'smtp_pass' => 'bookingsHomeHelp@123',
-    'from_name' => 'Home Help Rwanda',
-    'phone'     => '+250 790 533 144',
-    'email'     => 'info@homehelp.rw',
-    'address'   => 'Kigali, Rwanda',
-    'site'      => 'https://homehelp.rw',
+    'smtp_host' => defined('SMTP_HOST') ? SMTP_HOST : hh_env('SMTP_HOST', 'mail.homehelp.rw'),
+    'smtp_port' => defined('SMTP_PORT') ? (int)SMTP_PORT : (int)hh_env('SMTP_PORT', '465'),
+    'smtp_user' => defined('SMTP_USER') ? SMTP_USER : hh_env('SMTP_USER', 'bookings@homehelp.rw'),
+    'smtp_pass' => defined('SMTP_PASS') ? SMTP_PASS : hh_env('SMTP_PASS'),
+    'smtp_secure' => hh_env('SMTP_SECURE', ''), // ssl | tls | empty=auto
+    'from_name' => defined('MAIL_FROM_NAME') ? MAIL_FROM_NAME : hh_env('MAIL_FROM_NAME', 'Home Help Rwanda'),
+    'reply_to'  => defined('MAIL_CONTACT_EMAIL') ? MAIL_CONTACT_EMAIL : hh_env('MAIL_CONTACT_EMAIL', 'info@homehelp.rw'),
+    'phone'     => defined('MAIL_CONTACT_PHONE') ? MAIL_CONTACT_PHONE : hh_env('MAIL_CONTACT_PHONE', '+250 790 533 144'),
+    'email'     => defined('MAIL_CONTACT_EMAIL') ? MAIL_CONTACT_EMAIL : hh_env('MAIL_CONTACT_EMAIL', 'info@homehelp.rw'),
+    'address'   => defined('MAIL_ADDRESS') ? MAIL_ADDRESS : hh_env('MAIL_ADDRESS', 'Kigali, Rwanda'),
+    'site'      => defined('SITE_URL') ? SITE_URL : hh_env('SITE_URL', 'https://homehelp.rw'),
+    // Fallback Gmail SMTP (used when domain mailbox auth fails)
+    'gmail_host' => hh_env('SMTP_GMAIL_HOST', 'smtp.gmail.com'),
+    'gmail_port' => (int)hh_env('SMTP_GMAIL_PORT', '587'),
+    'gmail_user' => hh_env('SMTP_GMAIL_USER'),
+    'gmail_pass' => str_replace(' ', '', hh_env('SMTP_GMAIL_PASS')),
 ];
 
-
-// ── SEND EMAIL (real SMTP, authenticated) ──────────────────────
-function sendBookingEmail($to, string $subject, string $body): bool {
+/**
+ * Build SMTP transport profiles: primary domain mailbox, then optional Gmail.
+ */
+function hh_mailer_profiles(): array {
     global $_MAILER_CONFIG;
+    $profiles = [];
 
-    $recipients = is_array($to) ? $to : [$to];
+    if (!empty($_MAILER_CONFIG['smtp_host']) && !empty($_MAILER_CONFIG['smtp_user']) && $_MAILER_CONFIG['smtp_pass'] !== '') {
+        $profiles[] = [
+            'label'  => 'primary',
+            'host'   => $_MAILER_CONFIG['smtp_host'],
+            'port'   => (int)$_MAILER_CONFIG['smtp_port'],
+            'user'   => $_MAILER_CONFIG['smtp_user'],
+            'pass'   => $_MAILER_CONFIG['smtp_pass'],
+            'secure' => $_MAILER_CONFIG['smtp_secure'],
+            'from'   => $_MAILER_CONFIG['smtp_user'],
+        ];
+    }
 
+    if (!empty($_MAILER_CONFIG['gmail_user']) && !empty($_MAILER_CONFIG['gmail_pass'])) {
+        $profiles[] = [
+            'label'  => 'gmail',
+            'host'   => $_MAILER_CONFIG['gmail_host'] ?: 'smtp.gmail.com',
+            'port'   => (int)($_MAILER_CONFIG['gmail_port'] ?: 587),
+            'user'   => $_MAILER_CONFIG['gmail_user'],
+            'pass'   => $_MAILER_CONFIG['gmail_pass'],
+            'secure' => 'tls',
+            'from'   => $_MAILER_CONFIG['gmail_user'],
+        ];
+    }
+
+    return $profiles;
+}
+
+function hh_mailer_secure_for(array $profile): string {
+    $secure = strtolower(trim((string)($profile['secure'] ?? '')));
+    if ($secure === 'ssl' || $secure === 'smtps') {
+        return PHPMailer::ENCRYPTION_SMTPS;
+    }
+    if ($secure === 'tls' || $secure === 'starttls') {
+        return PHPMailer::ENCRYPTION_STARTTLS;
+    }
+    $port = (int)($profile['port'] ?? 0);
+    return $port === 465 ? PHPMailer::ENCRYPTION_SMTPS : PHPMailer::ENCRYPTION_STARTTLS;
+}
+
+/**
+ * Attempt one SMTP profile.
+ * @return array{ok:bool,error:string}
+ */
+function hh_mailer_send_with(array $profile, array $recipients, string $subject, string $body, string $fromName, string $replyTo): array {
     $mail = new PHPMailer(true);
-    $result = false;
-    $error_msg = '';
-
     try {
-        // Server settings
         $mail->isSMTP();
-        $mail->Host       = $_MAILER_CONFIG['smtp_host'];
+        $mail->Host       = $profile['host'];
         $mail->SMTPAuth   = true;
-        $mail->Username   = $_MAILER_CONFIG['smtp_user'];
-        $mail->Password   = $_MAILER_CONFIG['smtp_pass'];
-        $mail->SMTPSecure = PHPMailer::ENCRYPTION_SMTPS;
-        $mail->Port       = $_MAILER_CONFIG['smtp_port'];
-
-        $mail->Timeout    = 15;
+        $mail->Username   = $profile['user'];
+        $mail->Password   = $profile['pass'];
+        $mail->SMTPSecure = hh_mailer_secure_for($profile);
+        $mail->Port       = (int)$profile['port'];
+        $mail->Timeout    = 20;
         $mail->SMTPKeepAlive = false;
+        $mail->SMTPOptions = [
+            'ssl' => [
+                'verify_peer'       => false,
+                'verify_peer_name'  => false,
+                'allow_self_signed' => true,
+            ],
+        ];
 
-        $mail->setFrom($_MAILER_CONFIG['smtp_user'], $_MAILER_CONFIG['from_name']);
+        $mail->setFrom($profile['from'], $fromName);
+        $mail->addReplyTo($replyTo !== '' ? $replyTo : $profile['from'], $fromName);
         foreach ($recipients as $r) {
-            $mail->addAddress($r);
+            if (is_string($r) && filter_var($r, FILTER_VALIDATE_EMAIL)) {
+                $mail->addAddress($r);
+            }
         }
-        $mail->addReplyTo($_MAILER_CONFIG['smtp_user'], $_MAILER_CONFIG['from_name']);
+        if (count($mail->getToAddresses()) < 1) {
+            return ['ok' => false, 'error' => 'No valid recipients'];
+        }
 
         $mail->isHTML(true);
         $mail->CharSet = 'UTF-8';
         $mail->Subject = $subject;
         $mail->Body    = $body;
-        // Plain-text fallback — HTML-only emails score high on spam filters
         $mail->AltBody = trim(preg_replace('/\n{3,}/', "\n\n", strip_tags(
             str_replace(['<br/>', '<br>', '<br />', '</p>', '</tr>'], "\n", $body)
         )));
 
         $mail->send();
-        $result = true;
+        return ['ok' => true, 'error' => ''];
     } catch (PHPMailerException $e) {
-        $result = false;
-        $error_msg = $mail->ErrorInfo ?: $e->getMessage();
-        error_log('[Mailer] sendBookingEmail FAILED to ' . implode(', ', $recipients) . ' — ' . $error_msg);
+        return ['ok' => false, 'error' => $mail->ErrorInfo ?: $e->getMessage()];
     } catch (\Throwable $e) {
-        $result = false;
-        $error_msg = $e->getMessage();
-        error_log('[Mailer] sendBookingEmail EXCEPTION to ' . implode(', ', $recipients) . ' — ' . $error_msg);
+        return ['ok' => false, 'error' => $e->getMessage()];
+    }
+}
+
+// ── SEND EMAIL (real SMTP, authenticated; Gmail fallback) ─────
+function sendBookingEmail($to, string $subject, string $body, string $replyTo = ''): bool {
+    global $_MAILER_CONFIG;
+
+    $recipients = is_array($to) ? $to : [$to];
+    $profiles   = hh_mailer_profiles();
+    $result     = false;
+    $error_msg  = '';
+    $errors     = [];
+    $reply      = $replyTo !== '' ? $replyTo : ($_MAILER_CONFIG['reply_to'] ?: $_MAILER_CONFIG['email']);
+
+    if (!$profiles) {
+        $error_msg = 'No SMTP credentials configured';
+        error_log('[Mailer] sendBookingEmail FAILED — ' . $error_msg);
+        logEmailAttempt(implode(', ', $recipients), $subject, false, $error_msg);
+        return false;
+    }
+
+    foreach ($profiles as $profile) {
+        $attempt = hh_mailer_send_with(
+            $profile,
+            $recipients,
+            $subject,
+            $body,
+            $_MAILER_CONFIG['from_name'],
+            $reply
+        );
+        if ($attempt['ok']) {
+            $result = true;
+            $error_msg = '';
+            if ($profile['label'] !== 'primary') {
+                error_log('[Mailer] sendBookingEmail OK via fallback profile=' . $profile['label']);
+            }
+            break;
+        }
+        $errors[] = $profile['label'] . ': ' . $attempt['error'];
+        error_log('[Mailer] profile=' . $profile['label'] . ' failed — ' . $attempt['error']);
+    }
+
+    if (!$result) {
+        $error_msg = implode(' | ', $errors);
+        error_log('[Mailer] sendBookingEmail FAILED to ' . implode(', ', $recipients) . ' — ' . $error_msg);
     }
 
     logEmailAttempt(implode(', ', $recipients), $subject, $result, $error_msg);
@@ -126,7 +227,7 @@ function emailFooter(): string {
 <tr>
   <td style="background:#0D1B4B;padding:12px 32px;text-align:center;">
     <p style="margin:0;font-size:11px;color:rgba(255,255,255,0.5);">
-      &copy; ' . $year . ' Home Help Rwanda &middot; Brilliant Elite Ltd &middot; Kigali, Rwanda
+      &copy; ' . $year . ' Home Help Rwanda &middot; HomeHelp Ltd &middot; Kigali, Rwanda
     </p>
   </td>
 </tr>
@@ -363,5 +464,32 @@ function buildApplicationApprovalEmailHTML(array $data): string {
         <a href="https://homehelp.rw/worker-login" style="display:inline-block;background:#0D1B4B;color:#FFFFFF;font-size:14px;font-weight:700;padding:14px 32px;border-radius:8px;text-decoration:none;">Log In to Your Account</a>
       </td></tr>
     </table>
+</td></tr>' . emailFooter();
+}
+
+// ── 7. CONTACT FORM MESSAGE (to Home Help) ────────────────────
+function buildContactMessageEmailHTML(array $data): string {
+    $name    = htmlspecialchars(trim(($data['first_name'] ?? '') . ' ' . ($data['last_name'] ?? '')));
+    $email   = htmlspecialchars($data['email']   ?? '—');
+    $topic_raw = trim((string)($data['topic'] ?? ''));
+    $topic   = htmlspecialchars($topic_raw !== '' ? $topic_raw : 'General enquiry');
+    $message = nl2br(htmlspecialchars($data['message'] ?? ''));
+    $ip      = htmlspecialchars($data['ip'] ?? '');
+
+    return emailStart('New Contact Message', '#2E5FC2') . '
+    <p style="margin:0 0 20px;font-size:15px;color:#1A1A2E;line-height:1.7;">
+      A new message was submitted from the Home Help contact form.
+    </p>
+    <table width="100%" cellpadding="0" cellspacing="0" style="margin-bottom:16px;">
+      <tr><td style="padding:8px 0;border-bottom:1px solid #F2EDE3;font-size:13px;color:#888;width:140px;">Name</td><td style="padding:8px 0;border-bottom:1px solid #F2EDE3;font-size:14px;font-weight:600;color:#1A1A2E;">' . $name . '</td></tr>
+      <tr><td style="padding:8px 0;border-bottom:1px solid #F2EDE3;font-size:13px;color:#888;">Email</td><td style="padding:8px 0;border-bottom:1px solid #F2EDE3;font-size:14px;font-weight:600;color:#1A1A2E;"><a href="mailto:' . $email . '" style="color:#2E5FC2;text-decoration:none;">' . $email . '</a></td></tr>
+      <tr><td style="padding:8px 0;border-bottom:1px solid #F2EDE3;font-size:13px;color:#888;">Topic</td><td style="padding:8px 0;border-bottom:1px solid #F2EDE3;font-size:14px;font-weight:600;color:#1A1A2E;">' . $topic . '</td></tr>
+      ' . ($ip !== '' ? '<tr><td style="padding:8px 0;font-size:13px;color:#888;">IP</td><td style="padding:8px 0;font-size:13px;color:#666;">' . $ip . '</td></tr>' : '') . '
+    </table>
+    <div style="background:#F8F9FF;border:1px solid #E8ECF4;border-radius:10px;padding:16px 18px;">
+      <p style="margin:0 0 8px;font-size:12px;font-weight:700;color:#0D1B4B;letter-spacing:.04em;text-transform:uppercase;">Message</p>
+      <p style="margin:0;font-size:14px;color:#1A1A2E;line-height:1.7;">' . $message . '</p>
+    </div>
+    <p style="margin:18px 0 0;font-size:12px;color:#888;">Reply directly to this email to respond to the sender.</p>
 </td></tr>' . emailFooter();
 }

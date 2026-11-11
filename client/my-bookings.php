@@ -63,13 +63,13 @@ $flash       = flashGet();
 
 // Icons are Lucide names (rendered via <i data-lucide>)
 $status_config = [
-    'pending'      => ['label'=>'Pending',      'color'=>'#B45309','bg'=>'#FFFBEB','icon'=>'clock'],
-    'under_review' => ['label'=>'Under Review', 'color'=>'#1D4ED8','bg'=>'#EFF6FF','icon'=>'search'],
-    'completed'    => ['label'=>'Completed',    'color'=>'#0A1F6B','bg'=>'#D4DCF5','icon'=>'trophy'],
-    'hold'         => ['label'=>'On Hold',      'color'=>'#B45309','bg'=>'#FFFBEB','icon'=>'circle-pause'],
-    'approved'     => ['label'=>'Approved',     'color'=>'#047857','bg'=>'#ECFDF5','icon'=>'circle-check'],
-    'rejected'     => ['label'=>'Rejected',     'color'=>'#B91C1C','bg'=>'#FEF2F2','icon'=>'circle-x'],
-    'cancelled'    => ['label'=>'Cancelled',    'color'=>'#6B7280','bg'=>'#F3F4F6','icon'=>'ban'],
+    'pending'      => ['label'=>'Pending',      'color'=>'#FCD34D','bg'=>'rgba(245,158,11,.18)','icon'=>'clock'],
+    'under_review' => ['label'=>'Under Review', 'color'=>'#93C5FD','bg'=>'rgba(59,130,246,.18)','icon'=>'search'],
+    'completed'    => ['label'=>'Completed',    'color'=>'#A5D8FF','bg'=>'rgba(255,255,255,.12)','icon'=>'trophy'],
+    'hold'         => ['label'=>'On Hold',      'color'=>'#FCD34D','bg'=>'rgba(245,158,11,.18)','icon'=>'circle-pause'],
+    'approved'     => ['label'=>'Approved',     'color'=>'#6EE7B7','bg'=>'rgba(16,185,129,.18)','icon'=>'circle-check'],
+    'rejected'     => ['label'=>'Rejected',     'color'=>'#FCA5A5','bg'=>'rgba(239,68,68,.18)','icon'=>'circle-x'],
+    'cancelled'    => ['label'=>'Cancelled',    'color'=>'rgba(255,255,255,.55)','bg'=>'rgba(255,255,255,.1)','icon'=>'ban'],
 ];
 
 // Map a service name to a Lucide icon (display only)
@@ -102,7 +102,7 @@ include '../includes/dash-head.php';
 .filter-tabs{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:20px}
 .filter-tab{display:inline-flex;align-items:center;gap:6px;padding:8px 14px;border-radius:99px;font-size:.82rem;font-weight:600;border:1px solid var(--line);background:var(--white);color:var(--muted);transition:all .15s}
 .filter-tab:hover{border-color:var(--navy-light);color:var(--navy)}
-.filter-tab.active{background:var(--navy);border-color:var(--navy);color:#fff}
+.filter-tab.active{background:rgba(255,255,255,.22);border-color:transparent;color:#fff}
 .filter-count{background:rgba(255,255,255,.22);color:inherit;font-size:.7rem;font-weight:700;padding:1px 7px;border-radius:99px}
 .filter-tab:not(.active) .filter-count{background:var(--bg);color:var(--soft)}
 
@@ -127,7 +127,7 @@ include '../includes/dash-head.php';
 .booking-notes i{width:14px;height:14px;flex-shrink:0}
 .booking-notes span{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .booking-actions{display:flex;gap:8px;flex-shrink:0;align-items:center}
-.btn-view{display:inline-flex;align-items:center;gap:6px;padding:7px 14px;border-radius:var(--radius-sm);background:var(--navy);color:#fff;font-size:.78rem;font-weight:700;border:none;cursor:pointer;font-family:var(--font)}
+.btn-view{display:inline-flex;align-items:center;gap:6px;padding:7px 14px;border-radius:var(--radius-sm);background:rgba(255,255,255,.18);color:#fff;font-size:.78rem;font-weight:700;border:none;cursor:pointer;font-family:var(--font)}
 .btn-view:hover{background:var(--navy-mid)}
 .btn-view i{width:14px;height:14px}
 .btn-cancel-booking{display:inline-flex;align-items:center;gap:6px;padding:7px 14px;border-radius:var(--radius-sm);background:transparent;border:1px solid #FECACA;color:#B91C1C;font-size:.78rem;font-weight:600;cursor:pointer;font-family:var(--font)}
@@ -138,15 +138,15 @@ include '../includes/dash-head.php';
 .progress-item{display:flex;flex-direction:column;align-items:center;flex-shrink:0}
 .progress-dot{width:26px;height:26px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:.72rem;font-weight:700;border:2px solid var(--line);background:var(--white);color:var(--soft)}
 .progress-dot i{width:13px;height:13px;stroke-width:3}
-.progress-dot.done{background:var(--navy);border-color:var(--navy);color:#fff}
+.progress-dot.done{background:rgba(255,255,255,.22);border-color:transparent;color:#fff}
 .progress-dot.current{background:var(--navy-light);border-color:var(--navy-light);color:#fff}
 .progress-line{width:44px;height:2px;background:var(--line);flex-shrink:0;margin-top:12px}
-.progress-line.done{background:var(--navy)}
+.progress-line.done{background:rgba(165,216,255,.65)}
 .progress-label{font-size:.68rem;color:var(--soft);text-align:center;margin-top:4px;white-space:nowrap}
 .progress-label.done{color:var(--navy);font-weight:600}
 .progress-label.current{color:var(--navy-light);font-weight:700}
 
-.btn-inline{display:inline-flex;align-items:center;gap:7px;padding:10px 18px;border-radius:10px;background:var(--navy);color:#fff;font-size:.86rem;font-weight:700}
+.btn-inline{display:inline-flex;align-items:center;gap:7px;padding:10px 18px;border-radius:10px;background:rgba(255,255,255,.18);color:#fff;font-size:.86rem;font-weight:700}
 .btn-inline:hover{background:var(--navy-mid)}
 .btn-inline i{width:15px;height:15px}
 .empty-card{background:var(--white);border:1px solid var(--line);border-radius:var(--radius)}
@@ -154,7 +154,7 @@ include '../includes/dash-head.php';
 /* Modals */
 .modal-overlay{display:none;position:fixed;inset:0;background:rgba(10,31,107,.45);z-index:500;align-items:center;justify-content:center;padding:20px}
 .modal-overlay.open{display:flex}
-.modal{background:var(--white);border-radius:var(--radius);padding:28px;max-width:420px;width:100%;box-shadow:0 20px 50px rgba(0,0,0,.2)}
+.modal{background:linear-gradient(160deg,rgba(255,255,255,.18),rgba(255,255,255,.08));border:none;border-radius:28px;padding:28px 26px;max-width:420px;width:100%;color:#fff;box-shadow:inset 0 1px 0 rgba(255,255,255,.22),0 24px 80px rgba(0,0,0,.35);backdrop-filter:blur(36px) saturate(170%);-webkit-backdrop-filter:blur(36px) saturate(170%)}
 .modal-icon{width:44px;height:44px;border-radius:12px;background:var(--danger-bg);color:var(--danger);display:flex;align-items:center;justify-content:center;margin-bottom:14px}
 .modal-icon i{width:20px;height:20px}
 .modal h3{font-size:1.15rem;font-weight:800;color:var(--navy);margin-bottom:8px;letter-spacing:-.01em}
@@ -166,7 +166,7 @@ include '../includes/dash-head.php';
 
 .detail-overlay{display:none;position:fixed;inset:0;background:rgba(10,31,107,.5);z-index:600;align-items:center;justify-content:center;padding:20px}
 .detail-overlay.open{display:flex}
-.detail-box{background:var(--white);border-radius:var(--radius);max-width:640px;width:100%;box-shadow:0 20px 60px rgba(0,0,0,.2);overflow:hidden;max-height:90vh;display:flex;flex-direction:column}
+.detail-box{background:linear-gradient(160deg,rgba(255,255,255,.16),rgba(255,255,255,.07));border:none;border-radius:28px;max-width:640px;width:100%;box-shadow:inset 0 1px 0 rgba(255,255,255,.2),0 24px 80px rgba(0,0,0,.35);overflow:hidden;max-height:90vh;display:flex;flex-direction:column;color:#fff;backdrop-filter:blur(36px) saturate(170%);-webkit-backdrop-filter:blur(36px) saturate(170%)}
 .detail-head{background:linear-gradient(135deg,var(--navy),var(--navy-mid));padding:20px 24px;display:flex;align-items:center;justify-content:space-between;flex-shrink:0}
 .detail-head-left{display:flex;align-items:center;gap:14px;min-width:0}
 .detail-svc-icon{width:46px;height:46px;border-radius:12px;background:rgba(255,255,255,.15);color:#fff;display:flex;align-items:center;justify-content:center;flex-shrink:0}
@@ -197,7 +197,7 @@ include '../includes/dash-head.php';
 .detail-team-note{background:var(--navy-soft);border-radius:var(--radius-sm);padding:12px 14px;font-size:.85rem;color:var(--navy)}
 .detail-empty{font-size:.84rem;color:var(--soft);font-style:italic}
 .detail-foot{padding:14px 24px;border-top:1px solid var(--line);display:flex;justify-content:flex-end;flex-shrink:0}
-.btn-detail-close{padding:9px 22px;border-radius:var(--radius-sm);background:var(--navy);color:#fff;font-family:var(--font);font-size:.87rem;font-weight:700;border:none;cursor:pointer}
+.btn-detail-close{padding:9px 22px;border-radius:var(--radius-sm);background:rgba(255,255,255,.18);color:#fff;font-family:var(--font);font-size:.87rem;font-weight:700;border:none;cursor:pointer}
 .btn-detail-close:hover{background:var(--navy-mid)}
 
 @media(max-width:1100px){.booking-card-body{grid-template-columns:repeat(2,1fr)}}

@@ -3,16 +3,18 @@
 //  Home Help — Database Connection
 //  File: config/db.php
 //  DevGuide §1.3 — using mysqli as specified
-//  Brilliant Elite Ltd · Rwanda 🇷🇼
+//  HomeHelp Ltd · Rwanda 🇷🇼
 // ============================================================
+
+require_once __DIR__ . '/env.php';
 
 // Use 127.0.0.1 (not "localhost") so mysqli uses TCP and respects the port.
 // Portable MariaDB runs on 3307 because Windows MySQL80 already uses 3306.
-define('DB_HOST', '127.0.0.1');
-define('DB_PORT', 3307);
-define('DB_USER', 'homehelp_user_help');
-define('DB_PASS', 'H@meHe!p3r');
-define('DB_NAME', 'homehelp_dhomehelpb');
+if (!defined('DB_HOST')) define('DB_HOST', hh_env('DB_HOST', '127.0.0.1'));
+if (!defined('DB_PORT')) define('DB_PORT', (int)hh_env('DB_PORT', '3307'));
+if (!defined('DB_USER')) define('DB_USER', hh_env('DB_USER', 'homehelp_user_help'));
+if (!defined('DB_PASS')) define('DB_PASS', hh_env('DB_PASS', ''));
+if (!defined('DB_NAME')) define('DB_NAME', hh_env('DB_NAME', 'homehelp_dhomehelpb'));
 
 mysqli_report(MYSQLI_REPORT_OFF);
 

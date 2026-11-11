@@ -20,7 +20,6 @@ require_once 'config/config.php';
 <!-- HERO -->
 <section class="page-hero">
   <div class="doc-container">
-    <span class="page-chip"><i data-lucide="file-text"></i>Legal Document</span>
     <h1 class="page-title">Terms of <em>Service</em></h1>
     <div class="doc-meta"><span><i data-lucide="calendar"></i>Last updated: <?= date('d F Y') ?></span><span><i data-lucide="circle-check"></i>Effective immediately</span><span><i data-lucide="building-2"></i>Home Help Rwanda</span></div>
   </div>
@@ -31,36 +30,32 @@ require_once 'config/config.php';
   <div class="doc-wrap">
 
     <!-- SIDEBAR NAV -->
-    <nav class="doc-nav">
-      <div class="doc-nav-title">Contents</div>
-      <ul class="doc-nav-list">
-        <li><a href="#acceptance">1. Acceptance</a></li>
-        <li><a href="#services">2. Our Services</a></li>
-        <li><a href="#accounts">3. User Accounts</a></li>
-        <li><a href="#clients">4. Clients</a></li>
-        <li><a href="#workers">5. Job Seekers</a></li>
-        <li><a href="#conduct">6. Conduct</a></li>
-        <li><a href="#privacy">7. Privacy</a></li>
-        <li><a href="#liability">8. Liability</a></li>
-        <li><a href="#termination">9. Termination</a></li>
-        <li><a href="#changes">10. Changes</a></li>
-        <li><a href="#contact">11. Contact</a></li>
-      </ul>
-    </nav>
+    <aside class="doc-nav-slot">
+      <nav class="doc-nav" id="docNav">
+        <div class="doc-nav-title">Contents</div>
+        <ul class="doc-nav-list">
+          <li><a href="#acceptance">1. Acceptance</a></li>
+          <li><a href="#services">2. Our Services</a></li>
+          <li><a href="#accounts">3. User Accounts</a></li>
+          <li><a href="#clients">4. Clients</a></li>
+          <li><a href="#workers">5. Job Seekers</a></li>
+          <li><a href="#conduct">6. Conduct</a></li>
+          <li><a href="#privacy">7. Privacy</a></li>
+          <li><a href="#liability">8. Liability</a></li>
+          <li><a href="#termination">9. Termination</a></li>
+          <li><a href="#changes">10. Changes</a></li>
+          <li><a href="#contact">11. Contact</a></li>
+        </ul>
+      </nav>
+    </aside>
 
     <!-- DOCUMENT BODY -->
     <div class="doc-content">
 
-      <div class="highlight-box">
-        <i data-lucide="pin"></i>
-        <p>Please read these Terms carefully before using Home Help. By creating an account or using our platform, you agree to be bound by these Terms.</p>
-      </div>
-
       <!-- 1 -->
       <div class="doc-section" id="acceptance">
-        <div class="doc-section-num">Section 01</div>
         <h2>Acceptance of Terms</h2>
-        <p>Welcome to <strong>Home Help</strong>, a domestic services marketplace operated by <strong>Brilliant Elite Ltd</strong>, a company registered in Kigali, Rwanda. These Terms of Service ("Terms") govern your access to and use of our platform, website, and related services.</p>
+        <p>Welcome to <strong>Home Help</strong>, a domestic services marketplace operated by <strong>HomeHelp Ltd</strong>, a company registered in Kigali, Rwanda. These Terms of Service ("Terms") govern your access to and use of our platform, website, and related services.</p>
         <p>By registering an account, booking a service, or applying for a job through Home Help, you confirm that you have read, understood, and agreed to these Terms. If you do not agree, you must not use our platform.</p>
         <p>These Terms apply to all users including <strong>Clients</strong> (households seeking domestic help), <strong>Job Seekers / Providers</strong> (domestic workers), and <strong>Agents</strong> (Home Help staff).</p>
       </div>
@@ -68,7 +63,6 @@ require_once 'config/config.php';
 
       <!-- 2 -->
       <div class="doc-section" id="services">
-        <div class="doc-section-num">Section 02</div>
         <h2>Our Services</h2>
         <p>Home Help provides an online marketplace platform that:</p>
         <ul>
@@ -84,7 +78,6 @@ require_once 'config/config.php';
 
       <!-- 3 -->
       <div class="doc-section" id="accounts">
-        <div class="doc-section-num">Section 03</div>
         <h2>User Accounts</h2>
         <p>To use most features of Home Help, you must create an account. By creating an account, you agree to:</p>
         <ul>
@@ -101,7 +94,6 @@ require_once 'config/config.php';
 
       <!-- 4 -->
       <div class="doc-section" id="clients">
-        <div class="doc-section-num">Section 04</div>
         <h2>Clients — Booking Services</h2>
         <p>As a <strong>Client</strong> on Home Help, you agree to:</p>
         <ul>
@@ -118,7 +110,6 @@ require_once 'config/config.php';
 
       <!-- 5 -->
       <div class="doc-section" id="workers">
-        <div class="doc-section-num">Section 05</div>
         <h2>Job Seekers — Applying for Work</h2>
         <p>As a <strong>Job Seeker</strong> on Home Help, you agree to:</p>
         <ul>
@@ -135,7 +126,6 @@ require_once 'config/config.php';
 
       <!-- 6 -->
       <div class="doc-section" id="conduct">
-        <div class="doc-section-num">Section 06</div>
         <h2>Prohibited Conduct</h2>
         <p>All users of Home Help are strictly prohibited from:</p>
         <ul>
@@ -153,7 +143,6 @@ require_once 'config/config.php';
 
       <!-- 7 -->
       <div class="doc-section" id="privacy">
-        <div class="doc-section-num">Section 07</div>
         <h2>Privacy &amp; Data</h2>
         <p>Your privacy is important to us. By using Home Help, you agree that we may collect and use your personal information as described in our <a href="/privacy" style="color:var(--navy-light);font-weight:600">Privacy Policy</a>.</p>
         <p>We collect information such as your name, email, phone number, location, and booking details to operate the platform and improve our services.</p>
@@ -163,7 +152,6 @@ require_once 'config/config.php';
 
       <!-- 8 -->
       <div class="doc-section" id="liability">
-        <div class="doc-section-num">Section 08</div>
         <h2>Limitation of Liability</h2>
         <p>Home Help is a <strong>marketplace platform</strong> that facilitates connections between clients and domestic workers. We are not directly responsible for:</p>
         <ul>
@@ -173,13 +161,12 @@ require_once 'config/config.php';
           <li>Actions taken by workers or clients outside of our platform</li>
         </ul>
         <p>We take reasonable steps to verify worker credentials through our agent network, but we <strong>cannot guarantee</strong> the conduct of any individual. Users engage with the platform at their own risk.</p>
-        <p>To the maximum extent permitted by Rwandan law, Brilliant Elite Ltd's total liability shall not exceed the fees paid (if any) to Home Help in the preceding 3 months.</p>
+        <p>To the maximum extent permitted by Rwandan law, HomeHelp Ltd's total liability shall not exceed the fees paid (if any) to Home Help in the preceding 3 months.</p>
       </div>
       <div class="doc-divider"></div>
 
       <!-- 9 -->
       <div class="doc-section" id="termination">
-        <div class="doc-section-num">Section 09</div>
         <h2>Termination</h2>
         <p>Home Help reserves the right to <strong>suspend or terminate</strong> your account at any time, with or without notice, if:</p>
         <ul>
@@ -194,7 +181,6 @@ require_once 'config/config.php';
 
       <!-- 10 -->
       <div class="doc-section" id="changes">
-        <div class="doc-section-num">Section 10</div>
         <h2>Changes to These Terms</h2>
         <p>Home Help reserves the right to update or modify these Terms at any time. When we make significant changes, we will notify you via:</p>
         <ul>
@@ -207,11 +193,10 @@ require_once 'config/config.php';
 
       <!-- 11 -->
       <div class="doc-section" id="contact">
-        <div class="doc-section-num">Section 11</div>
         <h2>Contact Us</h2>
         <p>If you have any questions about these Terms of Service, please contact us:</p>
         <ul>
-          <li><strong>Company:</strong> Brilliant Elite Ltd</li>
+          <li><strong>Company:</strong> HomeHelp Ltd</li>
           <li><strong>Email:</strong> info@homehelp.rw</li>
           <li><strong>WhatsApp:</strong> +250 790 533 144</li>
           <li><strong>Location:</strong> Kigali, Rwanda</li>
@@ -227,22 +212,23 @@ require_once 'config/config.php';
 
 <?php include __DIR__ . '/includes/public-footer.php'; ?>
 <script>
-// Highlight active contents item on scroll
-var sections = document.querySelectorAll('.doc-section');
-var navLinks  = document.querySelectorAll('.doc-nav-list a');
-function markActive(){
-  var scrollY = window.scrollY + 120;
-  sections.forEach(function(section){
-    if(section.offsetTop <= scrollY && section.offsetTop + section.offsetHeight > scrollY){
-      navLinks.forEach(function(l){l.classList.remove('active');});
-      var active = document.querySelector('.doc-nav-list a[href="#'+section.id+'"]');
-      if(active) active.classList.add('active');
-    }
-  });
-}
-window.addEventListener('scroll', markActive);
-markActive();
-if(window.lucide) lucide.createIcons();
+(function(){
+  var sections = document.querySelectorAll('.doc-section');
+  var navLinks = document.querySelectorAll('.doc-nav-list a');
+  function markActive(){
+    var scrollY = window.scrollY + 120;
+    sections.forEach(function(section){
+      if (section.offsetTop <= scrollY && section.offsetTop + section.offsetHeight > scrollY) {
+        navLinks.forEach(function(l){ l.classList.remove('active'); });
+        var active = document.querySelector('.doc-nav-list a[href="#' + section.id + '"]');
+        if (active) active.classList.add('active');
+      }
+    });
+  }
+  window.addEventListener('scroll', markActive, {passive:true});
+  markActive();
+  if (window.lucide) lucide.createIcons();
+})();
 </script>
 </body>
 </html>

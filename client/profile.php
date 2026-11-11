@@ -161,7 +161,7 @@ include '../includes/dash-head.php';
 .tab{flex:1;display:flex;align-items:center;justify-content:center;gap:7px;padding:10px 14px;border-radius:var(--radius-sm);font-size:.85rem;font-weight:600;color:var(--muted);cursor:pointer;transition:all .15s;border:none;background:transparent;font-family:var(--font)}
 .tab i{width:16px;height:16px}
 .tab:hover{color:var(--navy);background:var(--bg)}
-.tab.active{background:var(--navy);color:#fff}
+.tab.active{background:rgba(255,255,255,.18);color:#fff}
 .tab-panel{display:none}
 .tab-panel.active{display:block}
 
@@ -201,7 +201,7 @@ include '../includes/dash-head.php';
 .photo-preview p{text-align:center;font-size:.82rem;color:var(--muted);margin-top:8px}
 .current-photo{display:flex;align-items:center;gap:16px;background:var(--bg);border:1px solid var(--line);border-radius:var(--radius-sm);padding:14px 16px;margin-bottom:18px}
 .current-photo img,.current-photo .current-initials{width:54px;height:54px;border-radius:50%;object-fit:cover;flex-shrink:0}
-.current-initials{background:var(--navy);display:flex;align-items:center;justify-content:center;font-size:1.2rem;font-weight:800;color:#fff}
+.current-initials{background:rgba(255,255,255,.18);display:flex;align-items:center;justify-content:center;font-size:1.2rem;font-weight:800;color:#fff}
 .current-photo-info strong{display:block;font-size:.88rem;font-weight:700;color:var(--navy);margin-bottom:2px}
 .current-photo-info span{font-size:.78rem;color:var(--muted)}
 

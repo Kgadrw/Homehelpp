@@ -730,14 +730,14 @@ CREATE TABLE `service_fees` (
 --
 
 INSERT INTO `service_fees` (`id`, `service_id`, `fee_key`, `fee_label`, `amount`, `created_at`) VALUES
-(21, 6, 'base', 'Base cleaning fee', 15000.00, '2026-06-15 15:05:41'),
+(21, 6, 'base', 'Base cleaning fee', 50000.00, '2026-06-15 15:05:41'),
 (22, 6, 'per_room', 'Per room fee', 3000.00, '2026-06-15 15:05:41'),
 (23, 6, 'outdoor', 'Outdoor areas fee', 2000.00, '2026-06-15 15:05:41'),
 (24, 6, 'pool', 'Pool cleaning fee', 5000.00, '2026-06-15 15:05:41'),
 (25, 6, 'car', 'Car cleaning fee', 3000.00, '2026-06-15 15:05:41'),
 (26, 6, 'dishes', 'Dish washing fee', 2000.00, '2026-06-15 15:05:41'),
 (27, 6, 'pets', 'Pets fee', 2000.00, '2026-06-15 15:05:41'),
-(28, 7, 'base', 'Base housekeeping fee', 18000.00, '2026-06-15 15:05:41'),
+(28, 7, 'base', 'Base housekeeping fee', 50000.00, '2026-06-15 15:05:41'),
 (29, 7, 'per_room', 'Per room fee', 2500.00, '2026-06-15 15:05:41'),
 (30, 7, 'outdoor', 'Outdoor areas fee', 2000.00, '2026-06-15 15:05:41'),
 (31, 7, 'pool', 'Pool fee', 5000.00, '2026-06-15 15:05:41'),
@@ -748,7 +748,7 @@ INSERT INTO `service_fees` (`id`, `service_id`, `fee_key`, `fee_label`, `amount`
 (36, 9, 'event_base', 'Chef for events base fee', 50000.00, '2026-06-15 15:05:41'),
 (37, 9, 'per_person', 'Per person fee (events)', 5000.00, '2026-06-15 15:05:41'),
 (38, 9, 'menu', 'Menu planning fee', 10000.00, '2026-06-15 15:05:41'),
-(39, 9, 'home_base', 'Chef for home base fee', 30000.00, '2026-06-15 15:05:41'),
+(39, 9, 'home_base', 'Chef for home base fee', 50000.00, '2026-06-15 15:05:41'),
 (40, 9, 'home_per_person', 'Per person fee (home)', 3000.00, '2026-06-15 15:05:41');
 
 -- --------------------------------------------------------

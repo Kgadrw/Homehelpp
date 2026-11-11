@@ -110,18 +110,18 @@ include __DIR__ . '/includes/dash-head.php';
 ?>
 <style>
 .settings-wrap{max-width:760px}
-.settings-hero{display:flex;align-items:center;gap:16px;padding:18px 20px;border:1px solid var(--line);border-radius:var(--radius);background:#fff;margin-bottom:18px}
-.settings-av{width:52px;height:52px;border-radius:50%;background:var(--navy);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:1.15rem;flex-shrink:0}
-.settings-hero h2{margin:0;font-size:1.1rem;font-weight:800;color:var(--navy)}
+.settings-hero{display:flex;align-items:center;gap:16px;padding:18px 20px;border:none;border-radius:var(--radius);background:rgba(255,255,255,.1);margin-bottom:18px;backdrop-filter:blur(18px) saturate(140%);box-shadow:inset 0 1px 0 rgba(255,255,255,.16)}
+.settings-av{width:52px;height:52px;border-radius:50%;background:rgba(255,255,255,.16);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:1.15rem;flex-shrink:0}
+.settings-hero h2{margin:0;font-size:1.1rem;font-weight:800;color:#fff}
 .settings-hero p{margin:3px 0 0;font-size:.84rem;color:var(--muted)}
 .settings-tabs{display:flex;gap:6px;margin-bottom:16px;flex-wrap:wrap}
-.settings-tab{display:inline-flex;align-items:center;gap:7px;padding:10px 14px;border-radius:var(--radius-sm);border:1px solid var(--line);background:#fff;color:var(--muted);font-family:var(--font);font-size:.84rem;font-weight:700;cursor:pointer}
+.settings-tab{display:inline-flex;align-items:center;gap:7px;padding:10px 14px;border-radius:999px;border:none;background:rgba(255,255,255,.1);color:var(--muted);font-family:var(--font);font-size:.84rem;font-weight:700;cursor:pointer;backdrop-filter:blur(12px)}
 .settings-tab i{width:16px;height:16px}
-.settings-tab:hover{color:var(--navy);border-color:var(--navy-light)}
-.settings-tab.active{background:var(--navy);border-color:var(--navy);color:#fff}
+.settings-tab:hover{color:#fff;background:rgba(255,255,255,.16)}
+.settings-tab.active{background:rgba(255,255,255,.22);border:none;color:#fff}
 .settings-panel{display:none}
 .settings-panel.active{display:block}
-.settings-card{background:#fff;border:1px solid var(--line);border-radius:var(--radius);padding:22px 22px 20px}
+.settings-card{background:rgba(255,255,255,.1);border:none;border-radius:var(--radius);padding:22px 22px 20px;backdrop-filter:blur(18px) saturate(140%);box-shadow:inset 0 1px 0 rgba(255,255,255,.16)}
 .settings-card h3{margin:0 0 4px;font-size:1.02rem;font-weight:800;color:var(--navy)}
 .settings-card .sub{margin:0 0 20px;font-size:.84rem;color:var(--muted)}
 .settings-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}

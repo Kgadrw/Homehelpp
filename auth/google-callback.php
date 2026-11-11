@@ -3,7 +3,7 @@ require_once '../config/db.php';
 require_once '../config/config.php';
 
 // ── GOOGLE OAUTH CONFIG ───────────────────────────────────────
-// Credentials live in config/secrets.php (gitignored) or env defines in config.php.
+// Credentials live in project-root .env (gitignored).
 // Keep redirect path as /google-login (configured in Google Cloud Console).
 $google_client_id     = GOOGLE_CLIENT_ID;
 $google_client_secret = GOOGLE_CLIENT_SECRET;
@@ -14,7 +14,7 @@ $google_redirect_uri  = (GOOGLE_REDIRECT_URI !== '' && !str_contains(GOOGLE_REDI
 
 if ($google_client_id === '' || $google_client_secret === '') {
     http_response_code(500);
-    exit('Google OAuth is not configured. Add credentials in config/secrets.php.');
+    exit('Google OAuth is not configured. Add credentials to .env (see .env.example).');
 }
 
 function google_login_fallback_path($role) {

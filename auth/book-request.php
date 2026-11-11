@@ -86,6 +86,22 @@ if ($logged_in) {
     if (!$name) {
         $name = $user_name;
     }
+    // Modal for logged-in clients often omits phone/email — load from profile
+    $ustmt = $conn->prepare("SELECT name, email, phone FROM users WHERE id = ? LIMIT 1");
+    $ustmt->bind_param('i', $user_id);
+    $ustmt->execute();
+    if ($profile = $ustmt->get_result()->fetch_assoc()) {
+        if (!$name) {
+            $name = $profile['name'] ?? $name;
+        }
+        $user_name = $profile['name'] ?: $user_name;
+        if (!$email) {
+            $email = $profile['email'] ?? '';
+        }
+        if (!$phone) {
+            $phone = $profile['phone'] ?? '';
+        }
+    }
 } else {
     if (!$name || !$phone || !$email || !$password || !$confirm) {
         echo json_encode(['ok' => false, 'error' => 'Please fill in your contact details and password.']);
@@ -150,6 +166,9 @@ foreach ($selected_ids as $sid) {
         }
     }
 }
+if ($calculated_price > 0) {
+    $calculated_price = max(50000.0, $calculated_price);
+}
 
 $svc_names = [];
 foreach ($services as $sv) {
@@ -211,11 +230,31 @@ try {
         'living_area'      => $living_area,
         'calculated_price' => $calculated_price,
     ];
-    sendBookingEmail(
+    $admin_sent = sendBookingEmail(
         ['bookings@homehelp.rw', 'homehelpservicerw@gmail.com'],
         'New Booking - Home Help Rwanda',
         buildBookingEmailHTML($email_data)
     );
+    if (!$admin_sent) {
+        error_log('[Booking] Admin new-booking email failed for user_id=' . $user_id);
+    }
+
+    // Confirm to the client immediately (not only when admin opens the booking)
+    $booking_id = (int)$conn->insert_id;
+    if ($email && filter_var($email, FILTER_VALIDATE_EMAIL)) {
+        $client_sent = sendBookingEmail(
+            $email,
+            'We received your HomeHelp Rwanda booking request',
+            buildReviewEmailHTML([
+                'client_name'  => $user_name,
+                'service_name' => $service_name,
+                'booking_id'   => $booking_id ?: '',
+            ])
+        );
+        if (!$client_sent) {
+            error_log('[Booking] Client confirmation email failed to ' . $email);
+        }
+    }
 } catch (Throwable $e) {
     error_log('[Booking] Email failed: ' . $e->getMessage());
 }

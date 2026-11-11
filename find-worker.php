@@ -135,132 +135,7 @@ $total = count($workers);
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
 <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet"/>
 <script src="https://unpkg.com/lucide@0.468.0/dist/umd/lucide.min.js"></script>
-<style>
-:root{
-  --green-deep:#0A1F6B;--green-mid:#152268;--green-light:#2E5FC2;
-  --white:#FFFFFF;--field:#EEF2F8;--border:#E6EAF2;
-  --text-dark:#0B1220;--text-mid:#6B7280;--text-soft:#8B93A7;
-  --shadow-sm:0 2px 12px rgba(13,27,75,0.08);
-  --font-body:'Plus Jakarta Sans',sans-serif;
-}
-*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-html{scroll-behavior:smooth}
-body{font-family:var(--font-body);background:var(--white);color:var(--text-dark);overflow-x:hidden;line-height:1.65}
-a{text-decoration:none;color:inherit}
-img{max-width:100%;height:auto;display:block}
-.container{width:min(96%,1400px);margin:0 auto;padding:0 16px}
-
-.navbar{position:fixed;top:0;left:0;right:0;z-index:1000;padding:16px 0;transition:all 0.35s ease;background:rgba(255,255,255,0.94);backdrop-filter:blur(12px);border-bottom:1px solid var(--border);border-radius:0}
-.navbar.scrolled{top:12px;left:50%;right:auto;width:max-content;max-width:calc(100% - 24px);transform:translateX(-50%);padding:8px 18px;border-radius:999px;background:rgba(255,255,255,0.96);box-shadow:0 10px 36px rgba(7,35,24,0.12);border:1.5px solid rgba(7,35,24,0.08)}
-.navbar.scrolled .container{width:auto;max-width:none;padding:0 10px}
-.navbar.scrolled .navbar-inner{gap:28px}
-.navbar-inner{display:flex;align-items:center;justify-content:space-between;gap:24px;flex-wrap:nowrap}
-.nav-logo{display:flex;align-items:center;gap:10px}
-.nav-logo img{width:40px;height:40px;object-fit:contain}
-.nav-logo-text{font-size:1.2rem;font-weight:800;color:var(--green-deep);letter-spacing:-0.02em}
-.nav-links{display:flex;align-items:center;gap:20px;list-style:none;flex-wrap:nowrap;justify-content:center}
-.nav-links a{font-size:0.9rem;font-weight:500;color:#6B7280;transition:color 0.2s;text-decoration:none;white-space:nowrap}
-.nav-links a:hover{color:var(--green-deep)}
-.nav-links a.active{color:var(--green-deep);font-weight:700}
-.nav-cta{display:flex;align-items:center;gap:16px}
-.nav-login{font-size:0.9rem;font-weight:600;color:var(--text-mid)}
-.nav-login:hover{color:var(--green-deep)}
-.nav-register{font-size:0.9rem;font-weight:600;color:var(--green-deep)}
-.btn-find-worker{display:inline-flex;align-items:center;gap:7px;padding:11px 22px;border-radius:999px;background:var(--green-deep);color:var(--white);font-size:0.88rem;font-weight:700}
-.btn-find-worker:hover{background:var(--green-mid)}
-.btn-find-worker svg{width:15px;height:15px}
-.hamburger{display:none;flex-direction:column;gap:5px;background:none;border:none;cursor:pointer;padding:4px}
-.hamburger span{display:block;width:24px;height:2px;background:var(--green-deep);border-radius:2px;transition:all 0.3s}
-.hamburger.open span:nth-child(1){transform:translateY(7px) rotate(45deg)}
-.hamburger.open span:nth-child(2){opacity:0}
-.hamburger.open span:nth-child(3){transform:translateY(-7px) rotate(-45deg)}
-.mobile-menu{display:none;position:fixed;inset:0;background:var(--green-deep);z-index:999;flex-direction:column;align-items:center;padding:90px 20px 40px;opacity:0;pointer-events:none;transition:opacity 0.3s;overflow-y:auto}
-.mobile-menu.open{display:flex;opacity:1;pointer-events:all}
-.mob-link{font-size:1.4rem;font-weight:700;color:var(--white);padding:14px 0;width:100%;text-align:center;border-bottom:1px solid rgba(255,255,255,0.08);text-decoration:none}
-.mob-link.active{font-weight:800}
-.mobile-menu-footer{display:flex;gap:12px;flex-wrap:wrap;justify-content:center;padding:24px 0 0;width:100%;margin-top:8px;border-top:1px solid rgba(255,255,255,0.1)}
-
-.page-hero{padding:120px 0 40px;background:var(--white)}
-.page-eyebrow{font-size:0.88rem;font-weight:500;color:var(--text-soft);margin-bottom:10px}
-.page-title{font-size:clamp(2rem,4vw,3rem);font-weight:800;color:var(--green-deep);letter-spacing:-0.03em;line-height:1.12;margin-bottom:12px}
-.page-sub{font-size:1rem;color:var(--text-mid);max-width:560px;line-height:1.7}
-
-.main{padding:24px 0 88px;background:#F4F6FA}
-.filter-chips{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:28px}
-.chip{display:inline-flex;align-items:center;gap:6px;padding:9px 14px;border-radius:99px;border:1.5px solid var(--border);background:var(--white);font-size:0.82rem;font-weight:600;color:var(--text-mid);transition:all 0.2s}
-.chip:hover,.chip.active{background:var(--green-deep);border-color:var(--green-deep);color:var(--white)}
-.results-header{display:flex;align-items:flex-end;justify-content:space-between;gap:16px;margin-bottom:24px;flex-wrap:wrap}
-.results-title{font-size:clamp(1.4rem,2.5vw,1.9rem);font-weight:800;color:var(--green-deep);letter-spacing:-0.02em}
-.results-count{font-size:0.9rem;color:var(--text-soft);margin-top:4px}
-.results-count strong{color:var(--green-deep)}
-.clear-filters{font-size:0.85rem;font-weight:600;color:var(--green-light)}
-
-.workers-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:18px}
-.worker-card{display:flex;flex-direction:column;border-radius:22px;overflow:hidden;background:var(--white);border:1px solid var(--border);isolation:isolate}
-.worker-media{position:relative;aspect-ratio:1/1;background:#E8ECF4;overflow:hidden}
-.worker-media img{width:100%;height:100%;object-fit:cover;object-position:center top;display:block}
-.worker-body{padding:16px 16px 18px;display:flex;flex-direction:column;gap:4px;background:var(--white)}
-.worker-name{font-size:1.02rem;font-weight:700;color:var(--green-deep)}
-.worker-role{font-size:0.86rem;color:#4B5568;font-weight:600}
-.worker-meta{font-size:0.78rem;color:var(--text-soft);margin-bottom:10px}
-.worker-badge{display:inline-flex;align-items:center;gap:5px;width:fit-content;font-size:0.68rem;font-weight:700;color:var(--green-deep);background:#EEF2FF;padding:3px 8px;border-radius:99px;margin-bottom:6px}
-.worker-btn{display:inline-flex;align-items:center;justify-content:center;width:100%;padding:11px 16px;border-radius:999px;background:var(--green-deep);color:var(--white);font-size:0.88rem;font-weight:700;transition:background 0.25s}
-.worker-btn:hover{background:var(--green-mid)}
-
-.empty-state{grid-column:1/-1;text-align:center;padding:64px 20px;background:var(--white);border-radius:24px;border:1px solid var(--border)}
-.empty-state h3{font-size:1.4rem;font-weight:800;color:var(--green-deep);margin:12px 0 8px}
-.empty-state p{color:var(--text-soft);max-width:420px;margin:0 auto 20px}
-.empty-state a{display:inline-flex;padding:12px 22px;border-radius:999px;background:var(--green-deep);color:var(--white);font-weight:700}
-
-.cta-wrap{margin-top:48px}
-.cta-card{position:relative;overflow:hidden;background:#07164F;border-radius:28px;padding:48px;text-align:center;isolation:isolate}
-.cta-card::before{content:'';position:absolute;inset:0;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");background-size:140px 140px;opacity:0.3;mix-blend-mode:soft-light;pointer-events:none}
-.cta-inner{position:relative;z-index:1;max-width:620px;margin:0 auto}
-.cta-inner h2{font-size:clamp(1.6rem,3vw,2.3rem);font-weight:800;color:var(--white);letter-spacing:-0.03em;margin-bottom:10px}
-.cta-inner p{color:rgba(255,255,255,0.7);margin-bottom:24px;line-height:1.7}
-.cta-btns{display:flex;justify-content:center;gap:12px;flex-wrap:wrap}
-.cta-btn-primary{display:inline-flex;align-items:center;gap:8px;padding:13px 22px;border-radius:999px;background:var(--white);color:var(--green-deep);font-weight:700}
-.cta-btn-ghost{display:inline-flex;align-items:center;padding:12px 22px;border-radius:999px;border:1.5px solid rgba(255,255,255,0.35);color:var(--white);font-weight:700}
-
-.footer{background:#07164F;color:rgba(255,255,255,0.7);padding:72px 0 0;position:relative;isolation:isolate}
-.footer::before{content:'';position:absolute;inset:0;pointer-events:none;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");background-size:140px 140px;opacity:0.2;mix-blend-mode:soft-light}
-.footer .container{position:relative;z-index:1}
-.footer-grid{display:grid;grid-template-columns:1.8fr 1fr 1fr 1fr;gap:40px;margin-bottom:48px}
-.footer-brand{display:flex;align-items:center;gap:10px;margin-bottom:14px;text-decoration:none}
-.footer-brand img{width:40px;height:40px;object-fit:contain}
-.footer-brand span{font-size:1.2rem;font-weight:800;color:var(--white);letter-spacing:-0.02em}
-.footer-desc{font-size:0.88rem;line-height:1.75;color:rgba(255,255,255,0.58);margin-bottom:20px;max-width:320px}
-.social-links{display:flex;gap:10px}
-.social-link{width:38px;height:38px;border-radius:50%;background:rgba(255,255,255,0.06);border:1.5px solid rgba(255,255,255,0.18);display:inline-flex;align-items:center;justify-content:center;color:var(--white);transition:all 0.25s}
-.social-link svg{width:17px;height:17px;display:block}
-.social-link:hover{background:rgba(255,255,255,0.14);border-color:rgba(255,255,255,0.35)}
-.footer-col h5{font-size:0.92rem;font-weight:700;color:var(--white);margin-bottom:16px}
-.footer-links{display:flex;flex-direction:column;gap:10px;list-style:none}
-.footer-links a{font-size:0.88rem;color:rgba(255,255,255,0.55);transition:color 0.2s}
-.footer-links a:hover{color:var(--white)}
-.footer-bottom{border-top:1px solid rgba(255,255,255,0.1);padding:22px 0;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px}
-.footer-bottom p{font-size:0.82rem;color:rgba(255,255,255,0.42)}
-.footer-bottom-links{display:flex;gap:20px}
-.footer-bottom a{font-size:0.82rem;color:rgba(255,255,255,0.42);transition:color 0.2s}
-.footer-bottom a:hover{color:var(--white)}
-.footer-credit{position:relative;z-index:1;text-align:center;padding:14px 0;border-top:1px solid rgba(255,255,255,0.08);font-size:0.76rem;color:rgba(255,255,255,0.32)}
-.footer-credit a{color:rgba(255,255,255,0.5)}
-@media(max-width:900px){.footer-grid{grid-template-columns:1fr 1fr;gap:32px}}
-@media(max-width:600px){.footer-grid{grid-template-columns:1fr}}
-
-.reveal{opacity:0;transform:translateY(20px);transition:opacity 0.6s ease,transform 0.6s ease}
-.reveal.visible{opacity:1;transform:translateY(0)}
-
-@media(max-width:1100px){.workers-grid{grid-template-columns:repeat(3,1fr)}}
-@media(max-width:900px){
-  .workers-grid{grid-template-columns:repeat(2,1fr)}
-}
-@media(max-width:768px){
-  .nav-links,.nav-cta{display:none}.hamburger{display:flex}
-  .workers-grid{grid-template-columns:1fr}
-  .cta-card{padding:36px 22px}
-}
-</style>
+<link rel="stylesheet" href="<?= rtrim(BASE_URL,'/') ?>/assets/css/public.css"/>
 </head>
 <body>
 
@@ -301,7 +176,7 @@ img{max-width:100%;height:auto;display:block}
     <div class="workers-grid">
       <?php if (empty($workers)): ?>
         <div class="empty-state reveal">
-          <i data-lucide="search-x" style="width:36px;height:36px;color:var(--green-deep)"></i>
+          <i data-lucide="search-x" style="width:36px;height:36px;color:var(--soft)"></i>
           <h3>No Workers Found</h3>
           <p>No workers match your search right now. Try different filters or check back soon.</p>
           <a href="/find-worker">Clear Filters</a>
@@ -409,10 +284,10 @@ img{max-width:100%;height:auto;display:block}
       <div class="footer-col">
         <h5>Account</h5>
         <ul class="footer-links">
-          <li><a href="/login" data-open-login>Login</a></li>
-          <li><a href="/register" data-open-register>Register</a></li>
-          <li><a href="/worker-login" data-open-worker-login>Job Seeker Login</a></li>
-          <li><a href="/worker-register">Job Seeker Register</a></li>
+          <li><a href="/worker-login" data-open-worker-login>Login</a></li>
+          <li><a href="/worker-register" data-open-worker-register>Register</a></li>
+          <li><a href="/login" data-open-login>Hire Login</a></li>
+          <li><a href="/register" data-open-register>Hire Register</a></li>
           <li><a href="/admin-login">Admin Login</a></li>
           <li><a href="/staff-login">Team Login</a></li>
         </ul>
@@ -437,6 +312,7 @@ if(window.lucide){lucide.createIcons();}
 </script>
 <?php
 include __DIR__ . '/includes/worker-login-modal.php';
+include __DIR__ . '/includes/worker-register-modal.php';
 include __DIR__ . '/includes/client-login-modal.php';
 include __DIR__ . '/includes/register-modal.php';
 include __DIR__ . '/includes/book-modal.php';

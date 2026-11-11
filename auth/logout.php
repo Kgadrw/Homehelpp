@@ -2,9 +2,6 @@
 require_once '../config/db.php';
 require_once '../config/config.php';
 
-// Check role BEFORE destroying session
-$role = $_SESSION['user_role'] ?? 'client';
-
 // Destroy session completely
 $_SESSION = [];
 if (ini_get('session.use_cookies')) {
@@ -16,13 +13,4 @@ if (ini_get('session.use_cookies')) {
 }
 session_destroy();
 
-// Redirect based on role
-if ($role === 'provider') {
-    redirect(BASE_URL . '/worker-login');
-} elseif ($role === 'admin') {
-    redirect(BASE_URL . '/admin-login');
-} elseif ($role === 'agent') {
-    redirect(BASE_URL . '/staff-login');
-} else {
-    redirect(BASE_URL . '/login');
-}
+redirect(BASE_URL . '/');

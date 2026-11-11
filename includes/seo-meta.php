@@ -25,7 +25,7 @@ $seo_emit_basics = $seo_emit_basics ?? false;
 <?php if ($seo_emit_basics): ?>
 <?php if (!empty($seo_title)): ?><title><?= htmlspecialchars($seo_title) ?></title><?php endif; ?>
 <meta name="description" content="<?= htmlspecialchars($seo_description) ?>"/>
-<meta name="author" content="Brilliant Elite Ltd"/>
+<meta name="author" content="HomeHelp Ltd"/>
 <meta name="robots" content="<?= htmlspecialchars($seo_robots) ?>"/>
 <?php if (!empty($seo_canonical)): ?><link rel="canonical" href="<?= htmlspecialchars($seo_canonical) ?>"/><?php endif; ?>
 <?php endif; ?>

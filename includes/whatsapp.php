@@ -17,9 +17,14 @@ function logWhatsAppAttempt(string $phone, string $message, bool $success): void
 }
 
 function sendWhatsApp(string $phone, string $message): bool {
-    // ── CONFIG ────────────────────────────────────────────────
-    $api_url   = 'https://wa-api.me/api/wa-accounts/messages'; // ✅ correct endpoint
-    $api_token = 'YOUR_WA_API_ME_TOKEN_HERE';                  // paste your token here
+    // ── CONFIG (from .env) ────────────────────────────────────
+    $api_url   = 'https://wa-api.me/api/wa-accounts/messages';
+    $api_token = defined('WA_API_ME_TOKEN') ? WA_API_ME_TOKEN : (defined('WA_TOKEN') ? WA_TOKEN : '');
+    if ($api_token === '') {
+        error_log('[WhatsApp] WA_API_ME_TOKEN / WA_TOKEN not configured in .env');
+        logWhatsAppAttempt($phone, $message, false);
+        return false;
+    }
     // ─────────────────────────────────────────────────────────
 
     // Normalize phone → international format WITHOUT + sign

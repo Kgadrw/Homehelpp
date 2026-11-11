@@ -1,5 +1,5 @@
 # ── Home Help Rwanda ──────────────────────────────────────────
-# homehelp.rw | Brilliant Elite Ltd | Kigali, Rwanda
+# homehelp.rw | HomeHelp Ltd | Kigali, Rwanda
 User-agent: *
 
 # Allow public pages

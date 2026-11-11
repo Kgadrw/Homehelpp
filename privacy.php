@@ -20,7 +20,6 @@ require_once 'config/config.php';
 <!-- HERO -->
 <section class="page-hero">
   <div class="doc-container">
-    <span class="page-chip"><i data-lucide="shield-check"></i>Legal Document</span>
     <h1 class="page-title">Privacy <em>Policy</em></h1>
     <div class="doc-meta"><span><i data-lucide="calendar"></i>Last updated: <?= date('d F Y') ?></span><span><i data-lucide="circle-check"></i>Effective immediately</span><span><i data-lucide="building-2"></i>Home Help Rwanda</span></div>
   </div>
@@ -31,42 +30,37 @@ require_once 'config/config.php';
   <div class="doc-wrap">
 
     <!-- SIDEBAR -->
-    <nav class="doc-nav">
-      <div class="doc-nav-title">Contents</div>
-      <ul class="doc-nav-list">
-        <li><a href="#overview">1. Overview</a></li>
-        <li><a href="#collect">2. Data We Collect</a></li>
-        <li><a href="#use">3. How We Use It</a></li>
-        <li><a href="#sharing">4. Data Sharing</a></li>
-        <li><a href="#storage">5. Data Storage</a></li>
-        <li><a href="#rights">6. Your Rights</a></li>
-        <li><a href="#cookies">7. Cookies</a></li>
-        <li><a href="#children">8. Children</a></li>
-        <li><a href="#changes">9. Changes</a></li>
-        <li><a href="#contact">10. Contact</a></li>
-      </ul>
-    </nav>
+    <aside class="doc-nav-slot">
+      <nav class="doc-nav" id="docNav">
+        <div class="doc-nav-title">Contents</div>
+        <ul class="doc-nav-list">
+          <li><a href="#overview">1. Overview</a></li>
+          <li><a href="#collect">2. Data We Collect</a></li>
+          <li><a href="#use">3. How We Use It</a></li>
+          <li><a href="#sharing">4. Data Sharing</a></li>
+          <li><a href="#storage">5. Data Storage</a></li>
+          <li><a href="#rights">6. Your Rights</a></li>
+          <li><a href="#cookies">7. Cookies</a></li>
+          <li><a href="#children">8. Children</a></li>
+          <li><a href="#changes">9. Changes</a></li>
+          <li><a href="#contact">10. Contact</a></li>
+        </ul>
+      </nav>
+    </aside>
 
     <!-- DOCUMENT -->
     <div class="doc-content">
 
-      <div class="highlight-box">
-        <i data-lucide="lock"></i>
-        <p>Your privacy matters to us. We only collect what we need to operate Home Help, and we never sell your personal data to anyone.</p>
-      </div>
-
       <!-- 1 -->
       <div class="doc-section" id="overview">
-        <div class="doc-section-num">Section 01</div>
         <h2>Overview</h2>
-        <p>This Privacy Policy explains how <strong>Brilliant Elite Ltd</strong> ("we", "us", "Home Help") collects, uses, stores, and protects your personal information when you use our domestic services platform at <strong>hh.bibhq.org</strong>.</p>
+        <p>This Privacy Policy explains how <strong>HomeHelp Ltd</strong> ("we", "us", "Home Help") collects, uses, stores, and protects your personal information when you use our domestic services platform at <strong>hh.bibhq.org</strong>.</p>
         <p>By creating an account or using Home Help, you agree to the collection and use of your information as described in this policy. This policy complies with applicable Rwandan data protection principles.</p>
       </div>
       <div class="doc-divider"></div>
 
       <!-- 2 -->
       <div class="doc-section" id="collect">
-        <div class="doc-section-num">Section 02</div>
         <h2>Data We Collect</h2>
         <p>We collect the following categories of personal information:</p>
         <div class="data-table-wrap"><table class="data-table">
@@ -117,7 +111,6 @@ require_once 'config/config.php';
 
       <!-- 3 -->
       <div class="doc-section" id="use">
-        <div class="doc-section-num">Section 03</div>
         <h2>How We Use Your Data</h2>
         <p>Your personal information is used to:</p>
         <ul>
@@ -136,7 +129,6 @@ require_once 'config/config.php';
 
       <!-- 4 -->
       <div class="doc-section" id="sharing">
-        <div class="doc-section-num">Section 04</div>
         <h2>Data Sharing</h2>
         <p>We <strong>do not sell</strong> your personal data. We share your information only in these limited circumstances:</p>
         <ul>
@@ -144,7 +136,7 @@ require_once 'config/config.php';
           <li><strong>Matched Parties:</strong> When a booking is approved, limited contact information may be shared between the client and assigned worker to facilitate the service</li>
           <li><strong>WhatsApp (Meta):</strong> We use WhatsApp links to notify you — this is subject to WhatsApp's own privacy policy</li>
           <li><strong>Legal Requirements:</strong> We may disclose information if required by Rwandan law or a court order</li>
-          <li><strong>Business Transfer:</strong> If Brilliant Elite Ltd is acquired or merged, your data may transfer to the new owner under the same privacy protections</li>
+          <li><strong>Business Transfer:</strong> If HomeHelp Ltd is acquired or merged, your data may transfer to the new owner under the same privacy protections</li>
         </ul>
         <p>We do not share your data with advertising networks, data brokers, or any third party for commercial purposes.</p>
       </div>
@@ -152,7 +144,6 @@ require_once 'config/config.php';
 
       <!-- 5 -->
       <div class="doc-section" id="storage">
-        <div class="doc-section-num">Section 05</div>
         <h2>Data Storage &amp; Security</h2>
         <p>Your data is stored on secure servers hosted in a professional data centre. We implement the following security measures:</p>
         <ul>
@@ -168,7 +159,6 @@ require_once 'config/config.php';
 
       <!-- 6 -->
       <div class="doc-section" id="rights">
-        <div class="doc-section-num">Section 06</div>
         <h2>Your Rights</h2>
         <p>You have the following rights regarding your personal data:</p>
         <ul>
@@ -185,7 +175,6 @@ require_once 'config/config.php';
 
       <!-- 7 -->
       <div class="doc-section" id="cookies">
-        <div class="doc-section-num">Section 07</div>
         <h2>Cookies &amp; Sessions</h2>
         <p>Home Help uses the following minimal tracking technologies:</p>
         <ul>
@@ -198,7 +187,6 @@ require_once 'config/config.php';
 
       <!-- 8 -->
       <div class="doc-section" id="children">
-        <div class="doc-section-num">Section 08</div>
         <h2>Children's Privacy</h2>
         <p>Home Help is not intended for use by persons under the age of <strong>18</strong>. We do not knowingly collect personal data from minors.</p>
         <p>If you believe a minor has created an account on our platform, please contact us immediately at <strong>info@homehelp.rw</strong> and we will delete the account promptly.</p>
@@ -207,7 +195,6 @@ require_once 'config/config.php';
 
       <!-- 9 -->
       <div class="doc-section" id="changes">
-        <div class="doc-section-num">Section 09</div>
         <h2>Changes to This Policy</h2>
         <p>We may update this Privacy Policy from time to time to reflect changes in our practices or applicable laws. When we make significant changes, we will:</p>
         <ul>
@@ -220,11 +207,10 @@ require_once 'config/config.php';
 
       <!-- 10 -->
       <div class="doc-section" id="contact">
-        <div class="doc-section-num">Section 10</div>
         <h2>Contact &amp; Data Requests</h2>
         <p>For any privacy-related questions, data access requests, or concerns, please contact our data controller:</p>
         <ul>
-          <li><strong>Company:</strong> Brilliant Elite Ltd</li>
+          <li><strong>Company:</strong> HomeHelp Ltd</li>
           <li><strong>Email:</strong> info@homehelp.rw</li>
           <li><strong>WhatsApp:</strong> +250 790 533 144</li>
           <li><strong>Location:</strong> Kigali, Rwanda</li>
@@ -239,22 +225,23 @@ require_once 'config/config.php';
 
 <?php include __DIR__ . '/includes/public-footer.php'; ?>
 <script>
-// Highlight active contents item on scroll
-var sections = document.querySelectorAll('.doc-section');
-var navLinks  = document.querySelectorAll('.doc-nav-list a');
-function markActive(){
-  var scrollY = window.scrollY + 120;
-  sections.forEach(function(section){
-    if(section.offsetTop <= scrollY && section.offsetTop + section.offsetHeight > scrollY){
-      navLinks.forEach(function(l){l.classList.remove('active');});
-      var active = document.querySelector('.doc-nav-list a[href="#'+section.id+'"]');
-      if(active) active.classList.add('active');
-    }
-  });
-}
-window.addEventListener('scroll', markActive);
-markActive();
-if(window.lucide) lucide.createIcons();
+(function(){
+  var sections = document.querySelectorAll('.doc-section');
+  var navLinks = document.querySelectorAll('.doc-nav-list a');
+  function markActive(){
+    var scrollY = window.scrollY + 120;
+    sections.forEach(function(section){
+      if (section.offsetTop <= scrollY && section.offsetTop + section.offsetHeight > scrollY) {
+        navLinks.forEach(function(l){ l.classList.remove('active'); });
+        var active = document.querySelector('.doc-nav-list a[href="#' + section.id + '"]');
+        if (active) active.classList.add('active');
+      }
+    });
+  }
+  window.addEventListener('scroll', markActive, {passive:true});
+  markActive();
+  if (window.lucide) lucide.createIcons();
+})();
 </script>
 </body>
 </html>

@@ -1,5 +1,5 @@
 # Local secrets — never commit
-config/secrets.php
 .env
 .env.*
 !.env.example
+config/secrets.php

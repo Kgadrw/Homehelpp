@@ -77,104 +77,61 @@ $base = rtrim(BASE_URL, '/');
 <script src="https://unpkg.com/lucide@0.468.0/dist/umd/lucide.min.js"></script>
 <link rel="stylesheet" href="<?= $base ?>/assets/css/public.css">
 <style>
-body{background:#fff;color:#0B1220}
-
-.cr-hero{background:#fff;padding:120px 0 64px}
-.cr-hero-copy{max-width:720px;margin:0 auto;text-align:center}
-.cr-title{font-size:clamp(2.3rem,4.4vw,3.4rem);font-weight:800;color:#0A1F6B;line-height:1.12;letter-spacing:-.03em;margin:0 0 16px}
-.cr-lead{font-size:1.02rem;color:#6B7280;line-height:1.65;max-width:560px;margin:0 auto}
-.cr-btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:13px 24px;border-radius:999px;font-size:.9rem;font-weight:700;text-decoration:none;transition:all .25s}
-.cr-btn svg{width:16px;height:16px}
-.cr-btn-primary{background:#0A1F6B;color:#fff}
-.cr-btn-primary:hover{background:#152268}
-.cr-btn-ghost{background:#fff;color:#0A1F6B;border:1.5px solid #E6EAF2}
-.cr-btn-ghost:hover{border-color:#0A1F6B}
-
-.cr-section{padding:88px 0;background:#fff}
-.cr-section.soft{background:#F7F9FC}
-.cr-head{max-width:560px;margin:0 auto 40px;text-align:center}
-.cr-head h2{font-size:clamp(1.7rem,3.2vw,2.4rem);font-weight:800;color:#0A1F6B;letter-spacing:-.03em;line-height:1.15;margin:0 0 10px}
-.cr-head p{font-size:.98rem;color:#8B93A7;line-height:1.65;margin:0}
-
-.cr-jobs{display:flex;flex-wrap:wrap;justify-content:center;gap:24px;max-width:1180px;margin:0 auto}
-.cr-job{display:flex;flex-direction:column;width:min(100%,360px);border-radius:24px;overflow:hidden;background:#fff;border:1px solid #E6EAF2;text-decoration:none;color:inherit;transition:border-color .25s,box-shadow .25s;text-align:left}
-.cr-job:hover{border-color:#C9D4EE;box-shadow:0 16px 40px rgba(10,31,107,.1)}
-.cr-job-media{aspect-ratio:5/4;overflow:hidden;background:#E8ECF4}
-.cr-job-media img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .35s}
-.cr-job:hover .cr-job-media img{transform:scale(1.04)}
-.cr-job-body{padding:22px 22px 24px;display:flex;flex-direction:column;align-items:stretch;flex:1;text-align:left}
-.cr-job-body h3{font-size:1.2rem;font-weight:800;color:#0A1F6B;margin:0 0 8px;letter-spacing:-.02em}
-.cr-job-body p{font-size:.95rem;color:#6B7280;line-height:1.65;margin:0 0 20px;flex:1}
-.cr-job-cta{display:inline-flex;align-items:center;justify-content:center;width:100%;padding:13px 18px;border-radius:999px;background:#0A1F6B;color:#fff;font-size:.92rem;font-weight:700}
-.cr-job:hover .cr-job-cta{background:#152268}
-
-.cr-hiw{display:grid;grid-template-columns:.95fr 1.05fr;gap:40px;align-items:stretch}
-.cr-hiw-media{position:relative;border-radius:24px;overflow:hidden;min-height:420px;background:#E8ECF4}
-.cr-hiw-media img{width:100%;height:100%;object-fit:cover;display:block;position:absolute;inset:0}
-.cr-hiw-stat{position:absolute;left:18px;bottom:18px;display:flex;align-items:center;gap:12px;background:rgba(255,255,255,.96);border-radius:16px;padding:14px 16px;box-shadow:0 10px 28px rgba(10,31,107,.12)}
-.cr-hiw-stat strong{display:block;font-size:1.2rem;font-weight:800;color:#0A1F6B;line-height:1}
-.cr-hiw-stat span{display:block;margin-top:3px;font-size:.75rem;font-weight:600;color:#6B7280}
-.cr-hiw-stat-icon{width:38px;height:38px;border-radius:50%;background:#EEF2FF;color:#0A1F6B;display:inline-flex;align-items:center;justify-content:center}
-.cr-hiw-stat-icon svg{width:18px;height:18px}
-.cr-steps{display:flex;flex-direction:column;gap:14px}
-.cr-step{border:1px solid #E6EAF2;border-radius:18px;padding:20px 22px;background:#fff;transition:border-color .25s;text-align:center}
-.cr-step:hover{border-color:#C9D4EE}
-.cr-step-label{display:block;font-size:.72rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:#8B93A7;margin-bottom:6px}
-.cr-step h3{font-size:1.05rem;font-weight:750;color:#0A1F6B;margin:0 0 6px}
-.cr-step p{margin:0;font-size:.92rem;line-height:1.55;color:#6B7280}
-
+.cr-step-label{display:block;font-size:.72rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:rgba(255,255,255,.55);margin-bottom:6px}
+.cr-step h3{font-size:1.05rem;font-weight:750;color:#fff;margin:0 0 6px}
+.cr-step p{margin:0;font-size:.92rem;line-height:1.55;color:rgba(255,255,255,.68)}
+.cr-step:hover{background:rgba(255,255,255,.14)}
 .cr-split{display:grid;grid-template-columns:1fr 1fr;gap:28px;align-items:stretch}
 .cr-benefits{display:flex;flex-direction:column;gap:14px}
-.cr-benefit{display:flex;gap:14px;align-items:flex-start;padding:18px;border:1px solid #E6EAF2;border-radius:16px;background:#fff;text-align:left}
-.cr-benefit-icon{width:42px;height:42px;border-radius:12px;background:#EEF2FF;color:#0A1F6B;display:inline-flex;align-items:center;justify-content:center;flex-shrink:0}
+.cr-benefit{display:flex;gap:14px;align-items:flex-start;padding:18px;border:none;border-radius:16px;background:rgba(255,255,255,.08);backdrop-filter:blur(18px) saturate(140%);-webkit-backdrop-filter:blur(18px) saturate(140%);box-shadow:none;text-align:left}
+.cr-benefit-icon{width:42px;height:42px;border-radius:12px;background:rgba(255,255,255,.12);color:#fff;display:inline-flex;align-items:center;justify-content:center;flex-shrink:0;border:none}
 .cr-benefit-icon svg{width:18px;height:18px}
-.cr-benefit h3{font-size:.95rem;font-weight:750;color:#0A1F6B;margin:0 0 4px}
-.cr-benefit p{font-size:.86rem;color:#6B7280;line-height:1.6;margin:0}
-.cr-req{background:#fff;border:1px solid #E6EAF2;border-radius:22px;padding:28px;display:flex;flex-direction:column;text-align:left;align-items:stretch}
-.cr-req h3{font-size:1.2rem;font-weight:800;color:#0A1F6B;margin:0 0 4px}
-.cr-req-sub{font-size:.86rem;color:#8B93A7;margin:0 0 18px}
+.cr-benefit h3{font-size:.95rem;font-weight:750;color:#fff;margin:0 0 4px}
+.cr-benefit p{font-size:.86rem;color:rgba(255,255,255,.68);line-height:1.6;margin:0}
+.cr-req{background:rgba(255,255,255,.08);border:none;border-radius:22px;padding:28px;display:flex;flex-direction:column;text-align:left;align-items:stretch;backdrop-filter:blur(22px) saturate(140%);-webkit-backdrop-filter:blur(22px) saturate(140%);box-shadow:none}
+.cr-req h3{font-size:1.2rem;font-weight:800;color:#fff;margin:0 0 4px}
+.cr-req-sub{font-size:.86rem;color:rgba(255,255,255,.55);margin:0 0 18px}
 .cr-req-list{display:flex;flex-direction:column;gap:12px;margin-bottom:18px;width:100%;align-items:stretch}
-.cr-req-item{display:flex;align-items:center;justify-content:flex-start;gap:10px;font-size:.9rem;color:#374151;text-align:left}
-.cr-req-item svg{width:18px;height:18px;color:#10B981;flex-shrink:0}
-.cr-req-note{font-size:.8rem;color:#8B93A7;line-height:1.6;padding-top:16px;border-top:1px solid #E6EAF2;margin-bottom:18px;width:100%;text-align:left}
+.cr-req-item{display:flex;align-items:center;justify-content:flex-start;gap:10px;font-size:.9rem;color:rgba(255,255,255,.82);text-align:left}
+.cr-req-item svg{width:18px;height:18px;color:#6EE7B7;flex-shrink:0}
+.cr-req-note{font-size:.8rem;color:rgba(255,255,255,.55);line-height:1.6;padding-top:16px;border-top:1px solid rgba(255,255,255,.1);margin-bottom:18px;width:100%;text-align:left}
 .cr-req .cr-btn{width:100%;margin-top:auto}
-
 .cr-quotes{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
-.cr-quote{background:#fff;border:1px solid #E6EAF2;border-radius:20px;padding:26px;display:flex;flex-direction:column;align-items:stretch;min-height:100%;text-align:left}
-.cr-quote p{font-size:.94rem;color:#6B7280;line-height:1.7;margin:0 0 22px;flex:1}
+.cr-quote{background:rgba(255,255,255,.08);border:none;border-radius:20px;padding:26px;display:flex;flex-direction:column;align-items:stretch;min-height:100%;text-align:left;backdrop-filter:blur(22px) saturate(140%);-webkit-backdrop-filter:blur(22px) saturate(140%);box-shadow:none}
+.cr-quote p{font-size:.94rem;color:rgba(255,255,255,.68);line-height:1.7;margin:0 0 22px;flex:1}
 .cr-quote-foot{display:flex;flex-direction:row;align-items:center;justify-content:space-between;gap:12px;margin-top:auto}
 .cr-quote-author{display:flex;flex-direction:row;align-items:center;gap:12px;min-width:0}
-.cr-avatar{width:42px;height:42px;border-radius:50%;background:#0A1F6B;color:#fff;display:inline-flex;align-items:center;justify-content:center;font-weight:800;flex-shrink:0}
-.cr-quote-author h5{font-size:.9rem;font-weight:700;color:#0A1F6B;margin:0}
-.cr-quote-author span{font-size:.76rem;color:#8B93A7}
+.cr-avatar{width:42px;height:42px;border-radius:50%;background:rgba(255,255,255,.14);color:#fff;display:inline-flex;align-items:center;justify-content:center;font-weight:800;flex-shrink:0;border:none;box-shadow:none}
+.cr-quote-author h5{font-size:.9rem;font-weight:700;color:#fff;margin:0}
+.cr-quote-author span{font-size:.76rem;color:rgba(255,255,255,.55)}
 .cr-stars{color:#F5B942;font-size:.85rem;letter-spacing:1px;flex-shrink:0}
-
-.cr-cta{padding:40px 0 96px;background:#fff}
-.cr-cta-card{background:#07164F;border-radius:28px;padding:48px;display:flex;align-items:center;justify-content:space-between;gap:28px;flex-wrap:wrap}
+.cr-cta{padding:40px 0 96px;background:transparent}
+.cr-cta-card{background:rgba(255,255,255,.08);border:none;border-radius:28px;padding:48px;display:flex;align-items:center;justify-content:space-between;gap:28px;flex-wrap:wrap;backdrop-filter:blur(22px) saturate(140%);-webkit-backdrop-filter:blur(22px) saturate(140%);box-shadow:none}
 .cr-cta-card h2{font-size:clamp(1.5rem,3vw,2.1rem);font-weight:800;color:#fff;letter-spacing:-.02em;margin:0 0 8px}
 .cr-cta-card p{color:rgba(255,255,255,.68);max-width:460px;margin:0;line-height:1.65}
 .cr-cta-actions{display:flex;flex-wrap:wrap;gap:12px}
-.cr-cta-card .cr-btn-primary{background:#fff;color:#0A1F6B}
-.cr-cta-card .cr-btn-primary:hover{background:#EEF2FF}
-.cr-cta-card .cr-btn-ghost{background:transparent;color:#fff;border-color:rgba(255,255,255,.35)}
-.cr-cta-card .cr-btn-ghost:hover{background:rgba(255,255,255,.1)}
-
-.reveal{opacity:0;transform:translateY(18px);transition:opacity .55s ease,transform .55s ease}
-.reveal.visible{opacity:1;transform:none}
-
 @media(max-width:1024px){
   .cr-job{width:min(100%,340px)}
-  .cr-hiw,.cr-split{grid-template-columns:1fr;gap:32px}
-  .cr-hiw-media{min-height:300px;aspect-ratio:16/10}
+  .cr-hiw,.cr-split{grid-template-columns:1fr;gap:28px}
+  .cr-hiw-media{min-height:280px;aspect-ratio:16/10}
   .cr-hiw-media img{position:absolute}
+  .cr-section{padding:64px 0}
+  .cr-quotes{grid-template-columns:repeat(2,1fr)}
 }
 @media(max-width:768px){
-  .cr-hero{padding:110px 0 56px}
   .cr-quotes{grid-template-columns:1fr}
-  .cr-cta-card{padding:36px 22px}
+  .cr-quote{padding:20px}
+  .cr-req{padding:22px 18px}
+  .cr-cta{padding:24px 0 64px}
+  .cr-cta-card{padding:28px 20px;border-radius:20px;flex-direction:column;align-items:stretch;text-align:center}
+  .cr-cta-card p{max-width:none}
+  .cr-cta-actions{justify-content:center;width:100%}
+  .cr-cta-actions .cr-btn{flex:1 1 auto;min-width:140px}
 }
-@media(max-width:560px){
-  .cr-job{width:100%}
+@media(max-width:480px){
+  .cr-cta-actions{flex-direction:column}
+  .cr-cta-actions .cr-btn{width:100%}
+  .cr-benefit{padding:14px}
 }
 </style>
 </head>
@@ -203,7 +160,7 @@ body{background:#fff;color:#0B1220}
       <?php foreach ($job_cards as $i => $job):
         $href = $job['id'] ? $base . '/worker-register?service=' . $job['id'] : $base . '/worker-register';
       ?>
-      <a class="cr-job reveal<?= $i % 4 === 0 ? '' : '' ?>" href="<?= htmlspecialchars($href) ?>">
+      <a class="cr-job reveal<?= $i % 4 === 0 ? '' : '' ?>" href="<?= htmlspecialchars($href) ?>" data-open-worker-register>
         <div class="cr-job-media">
           <img src="<?= $base ?>/<?= htmlspecialchars($job['img']) ?>" alt="<?= htmlspecialchars($job['name']) ?>"/>
         </div>
@@ -315,7 +272,7 @@ body{background:#fff;color:#0B1220}
           <div class="cr-req-item"><i data-lucide="circle-check"></i>Clean conduct record</div>
         </div>
         <p class="cr-req-note">Don&#8217;t meet all requirements? Apply anyway — our team will guide you on what to prepare.</p>
-        <a href="<?= $base ?>/worker-register" class="cr-btn cr-btn-primary">Start My Application <i data-lucide="arrow-right"></i></a>
+        <a href="<?= $base ?>/worker-register" class="cr-btn cr-btn-primary" data-open-worker-register>Start My Application <i data-lucide="arrow-right"></i></a>
       </aside>
     </div>
   </div>
@@ -381,7 +338,7 @@ body{background:#fff;color:#0B1220}
         <p>Create your free profile in minutes and let our team connect you with verified households.</p>
       </div>
       <div class="cr-cta-actions">
-        <a href="<?= $base ?>/worker-register" class="cr-btn cr-btn-primary">Apply for a Job <i data-lucide="arrow-right"></i></a>
+        <a href="<?= $base ?>/worker-register" class="cr-btn cr-btn-primary" data-open-worker-register>Apply for a Job <i data-lucide="arrow-right"></i></a>
         <a href="<?= $base ?>/worker-login" class="cr-btn cr-btn-ghost" data-open-worker-login>Log in</a>
       </div>
     </div>

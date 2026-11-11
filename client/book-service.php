@@ -93,6 +93,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['wizard_submit'])) {
                 }
             }
         }
+        if ($calculated_price > 0) {
+            $calculated_price = max(50000.0, $calculated_price);
+        }
 
         // ── SERVICE NAMES ─────────────────────────────────────
         $svc_names = [];
@@ -160,9 +163,33 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['wizard_submit'])) {
                 'living_area'      => $living_area,
                 'calculated_price' => $calculated_price,
             ];
-            sendBookingEmail('homehelpservicerw@gmail.com',
-                '🏠 New Booking — Home Help Rwanda',
-                buildBookingEmailHTML($email_data));
+            try {
+                $admin_sent = sendBookingEmail(
+                    ['bookings@homehelp.rw', 'homehelpservicerw@gmail.com'],
+                    'New Booking - Home Help Rwanda',
+                    buildBookingEmailHTML($email_data)
+                );
+                if (!$admin_sent) {
+                    error_log('[Booking] Admin new-booking email failed for user_id=' . $user_id);
+                }
+                $booking_id = (int)$conn->insert_id;
+                if ($email && filter_var($email, FILTER_VALIDATE_EMAIL)) {
+                    $client_sent = sendBookingEmail(
+                        $email,
+                        'We received your HomeHelp Rwanda booking request',
+                        buildReviewEmailHTML([
+                            'client_name'  => $name,
+                            'service_name' => $service_name,
+                            'booking_id'   => $booking_id ?: '',
+                        ])
+                    );
+                    if (!$client_sent) {
+                        error_log('[Booking] Client confirmation email failed to ' . $email);
+                    }
+                }
+            } catch (Throwable $e) {
+                error_log('[Booking] Email failed: ' . $e->getMessage());
+            }
 
             // ── REDIRECT WITH SUCCESS ─────────────────────────
             $_SESSION['booking_success'] = true;
@@ -204,7 +231,7 @@ include '../includes/dash-head.php';
 .wizard-wrap{max-width:780px;margin:0 auto}
 .step-card{background:var(--white);border:1px solid var(--line);border-radius:var(--radius);overflow:hidden;box-shadow:var(--shadow)}
 .prog-track{height:3px;background:var(--line)}
-.prog-fill{height:3px;background:var(--navy);transition:width .45s ease;border-radius:0 2px 2px 0}
+.prog-fill{height:3px;background:#A5D8FF;transition:width .45s ease;border-radius:0 2px 2px 0}
 .step-head{display:flex;align-items:center;justify-content:space-between;padding:22px 30px 0}
 .step-head-title{font-size:1.1rem;font-weight:800;color:var(--navy);letter-spacing:-.02em}
 .step-head-count{font-size:.76rem;color:var(--soft);font-weight:600}
@@ -213,7 +240,7 @@ include '../includes/dash-head.php';
 .sind:not(:last-child)::after{content:'';position:absolute;top:12px;left:calc(50% + 14px);right:calc(-50% + 14px);height:2px;background:var(--line);z-index:0;transition:background .3s}
 .sind.done:not(:last-child)::after{background:var(--navy-light)}
 .sind-circle{width:24px;height:24px;border-radius:50%;border:2px solid var(--line);background:var(--white);display:flex;align-items:center;justify-content:center;font-size:.65rem;font-weight:700;color:var(--soft);position:relative;z-index:1;transition:all .3s}
-.sind.active .sind-circle{border-color:var(--navy);background:var(--navy);color:#fff}
+.sind.active .sind-circle{border-color:transparent;background:rgba(255,255,255,.22);color:#fff}
 .sind.done .sind-circle{border-color:var(--navy-light);background:var(--navy-light);color:#fff}
 .sind-label{font-size:.62rem;font-weight:600;color:var(--soft);margin-top:4px;text-align:center}
 .sind.active .sind-label{color:var(--navy);font-weight:700}
@@ -230,12 +257,12 @@ include '../includes/dash-head.php';
 .svc-lbl input[type="checkbox"]{position:absolute;opacity:0;width:0;height:0}
 .svc-box{border:1.5px solid var(--line);border-radius:12px;padding:18px 10px;text-align:center;background:var(--white);transition:all .2s;position:relative}
 .svc-box:hover{border-color:var(--navy-light);background:var(--bg)}
-.svc-lbl input:checked + .svc-box{border-color:var(--navy);background:var(--navy-soft);box-shadow:0 0 0 3px rgba(10,31,107,.07)}
+.svc-lbl input:checked + .svc-box{border-color:var(--navy);background:var(--navy-soft);box-shadow:0 0 0 3px rgba(165,216,255,.22)}
 .svc-ico{width:42px;height:42px;border-radius:11px;background:var(--navy-soft);color:var(--navy);display:flex;align-items:center;justify-content:center;margin:0 auto 8px}
-.svc-lbl input:checked + .svc-box .svc-ico{background:var(--navy);color:#fff}
+.svc-lbl input:checked + .svc-box .svc-ico{background:rgba(255,255,255,.18);color:#fff}
 .svc-ico i{width:20px;height:20px}
 .svc-nm{font-size:.76rem;font-weight:700;color:var(--navy);display:block}
-.svc-tick{position:absolute;top:8px;right:8px;width:18px;height:18px;border-radius:50%;background:var(--navy);color:#fff;display:none;align-items:center;justify-content:center}
+.svc-tick{position:absolute;top:8px;right:8px;width:18px;height:18px;border-radius:50%;background:rgba(255,255,255,.18);color:#fff;display:none;align-items:center;justify-content:center}
 .svc-tick i{width:11px;height:11px;stroke-width:3}
 .svc-lbl input:checked + .svc-box .svc-tick{display:flex}
 
@@ -275,7 +302,7 @@ include '../includes/dash-head.php';
 .lang-lbl input[type="checkbox"]{display:none}
 .lang-pill{padding:9px 18px;border-radius:99px;border:1px solid var(--line);background:var(--white);font-size:.82rem;font-weight:600;color:var(--muted);transition:all .2s}
 .lang-pill:hover{border-color:var(--navy-light);background:var(--bg)}
-.lang-lbl input:checked + .lang-pill{border-color:var(--navy);background:var(--navy);color:#fff}
+.lang-lbl input:checked + .lang-pill{border-color:transparent;background:rgba(255,255,255,.22);color:#fff}
 .extra-details{border:1px solid var(--line);border-radius:12px;padding:16px 20px;margin-top:16px}
 .extra-title{font-size:.72rem;font-weight:700;color:var(--soft);text-transform:uppercase;letter-spacing:.08em;margin-bottom:12px}
 .live-opts{display:grid;grid-template-columns:1fr 1fr;gap:10px}
@@ -286,8 +313,13 @@ include '../includes/dash-head.php';
 /* Inputs with icons */
 .iw{position:relative}
 .iw .iico{position:absolute;left:13px;top:50%;transform:translateY(-50%);width:16px;height:16px;color:var(--soft);pointer-events:none;z-index:1}
-.iw input,.iw select{width:100%;padding:12px 14px 12px 40px;border:1px solid var(--line);border-radius:var(--radius-sm);font-family:var(--font);font-size:.88rem;color:var(--text);background:var(--white);outline:none;transition:border-color .2s,box-shadow .2s}
-.iw input:focus,.iw select:focus{border-color:var(--navy-light);box-shadow:0 0 0 3px rgba(46,95,194,.12)}
+.iw{position:relative;border:none;border-radius:16px;overflow:visible;background:linear-gradient(135deg,rgba(255,255,255,.16),rgba(255,255,255,.07));backdrop-filter:blur(14px) saturate(150%);-webkit-backdrop-filter:blur(14px) saturate(150%);box-shadow:inset 0 1px 0 rgba(255,255,255,.18)}
+.iw .iico{color:rgba(255,255,255,.55)}
+.iw input,.iw select{width:100%;padding:12px 14px 12px 40px;border:none;border-radius:16px;font-family:var(--font);font-size:.88rem;color:#fff;background:transparent;outline:none;color-scheme:dark;transition:box-shadow .2s}
+.iw input::placeholder{color:rgba(255,255,255,.38)}
+.iw select{appearance:none;-webkit-appearance:none;cursor:pointer;padding-right:36px}
+.iw input:focus,.iw select:focus{box-shadow:inset 0 1px 0 rgba(255,255,255,.22),0 0 0 3px rgba(165,216,255,.22)}
+.iw .glass-select{display:block}
 
 /* Review step */
 .profile-banner{background:var(--success-bg);border:1px solid #A7F3D0;border-radius:12px;padding:12px 16px;display:flex;align-items:center;gap:10px;margin-bottom:16px;font-size:.84rem;color:#047857;font-weight:500}
@@ -312,8 +344,8 @@ include '../includes/dash-head.php';
 
 /* Wizard nav */
 .wiz-nav{display:flex;gap:10px;margin-top:22px}
-.btn-next{flex:1;padding:12px 20px;border-radius:var(--radius-sm);background:var(--navy);color:#fff;font-family:var(--font);font-size:.9rem;font-weight:700;border:none;cursor:pointer;transition:background .2s;display:flex;align-items:center;justify-content:center;gap:8px}
-.btn-next:hover{background:var(--navy-mid)}
+.btn-next{flex:1;padding:12px 20px;border-radius:999px;background:rgba(255,255,255,.16);color:#fff;font-family:var(--font);font-size:.9rem;font-weight:700;border:none;cursor:pointer;transition:background .2s;display:flex;align-items:center;justify-content:center;gap:8px;box-shadow:none;backdrop-filter:blur(12px)}
+.btn-next:hover{background:rgba(255,255,255,.24)}
 .btn-next i{width:16px;height:16px}
 .btn-next.loading{opacity:.7;cursor:not-allowed;pointer-events:none}
 .btn-back-w{padding:12px 18px;border-radius:var(--radius-sm);background:transparent;border:1px solid var(--line);color:var(--muted);font-family:var(--font);font-size:.88rem;font-weight:600;cursor:pointer;transition:all .2s;display:inline-flex;align-items:center;gap:6px}
@@ -456,7 +488,7 @@ include '../includes/dash-sidebar.php';
                     <label>Living Area</label>
                     <div class="iw">
                       <i data-lucide="map-pin" class="iico"></i>
-                      <select name="living_area">
+                      <select name="living_area" data-glass>
                         <option value="">Select area...</option>
                         <option value="Within Kigali">Within Kigali</option>
                         <option value="Outside Kigali">Outside Kigali</option>
@@ -482,7 +514,7 @@ include '../includes/dash-sidebar.php';
 
               <div class="price-badge">
                 <div>
-                  <div class="price-badge-label">Estimated Monthly Fee</div>
+                  <div class="price-badge-label">Estimated Monthly Fee (from 50,000 RWF)</div>
                   <div class="price-badge-sub">Based on your selected services</div>
                 </div>
                 <div style="text-align:right">
@@ -723,7 +755,7 @@ function calcPrice(){
       }
     }
   });
-  return total;
+  return total>0?Math.max(50000,total):0;
 }
 
 function updateSummary(){

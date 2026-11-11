@@ -3,12 +3,15 @@
 // Silent email notification sender via Gmail SMTP + PHPMailer
 
 function sendBookingEmail(string $to, string $subject, string $body): bool {
-    // ── CONFIG ────────────────────────────────────────────────
-    $smtp_host = 'smtp.gmail.com';
-    $smtp_user = 'homehelpservicerw@gmail.com';
-    $smtp_pass = 'qrwc ryee lpds hqss';   // Gmail App Password
-    $smtp_port = 587;
-    $from_name = 'Home Help Rwanda';
+    // ── CONFIG (from .env — legacy Gmail path) ────────────────
+    if (!function_exists('hh_env') && is_file(__DIR__ . '/../../config/env.php')) {
+        require_once __DIR__ . '/../../config/env.php';
+    }
+    $smtp_host = function_exists('hh_env') ? hh_env('SMTP_GMAIL_HOST', 'smtp.gmail.com') : 'smtp.gmail.com';
+    $smtp_user = function_exists('hh_env') ? hh_env('SMTP_GMAIL_USER', 'homehelpservicerw@gmail.com') : 'homehelpservicerw@gmail.com';
+    $smtp_pass = function_exists('hh_env') ? hh_env('SMTP_GMAIL_PASS') : '';
+    $smtp_port = (int)(function_exists('hh_env') ? hh_env('SMTP_GMAIL_PORT', '587') : '587');
+    $from_name = function_exists('hh_env') ? hh_env('MAIL_FROM_NAME', 'Home Help Rwanda') : 'Home Help Rwanda';
     // ─────────────────────────────────────────────────────────
 
     // Try PHPMailer if available

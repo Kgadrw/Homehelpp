@@ -61,7 +61,7 @@ $topbar_action_icon  = 'plus';
 .page-intro{margin-bottom:20px}
 .page-intro h1{font-size:1.5rem;font-weight:800;color:var(--navy);letter-spacing:-.02em;margin-bottom:4px}
 .page-intro p{font-size:.9rem;color:var(--muted)}
-.sp-cancelled{background:#F3F4F6;color:#6B7280}
+.sp-cancelled{background:rgba(255,255,255,.1);color:rgba(255,255,255,.55)}
 .status-pill{gap:5px}
 .status-pill i{width:13px;height:13px}
 
@@ -78,13 +78,13 @@ $topbar_action_icon  = 'plus';
 .progress-item{display:flex;flex-direction:column;align-items:center;flex-shrink:0}
 .progress-dot{width:28px;height:28px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:.75rem;font-weight:700;border:2px solid var(--line);background:var(--white);color:var(--soft)}
 .progress-dot i{width:14px;height:14px;stroke-width:3}
-.progress-dot.done{background:var(--navy);border-color:var(--navy);color:#fff}
+.progress-dot.done{background:rgba(255,255,255,.22);border-color:transparent;color:#fff}
 .progress-dot.current{background:var(--navy-light);border-color:var(--navy-light);color:#fff}
 .progress-lbl{font-size:.68rem;color:var(--soft);margin-top:4px;white-space:nowrap}
 .progress-lbl.done{color:var(--navy);font-weight:600}
 .progress-lbl.current{color:var(--navy-light);font-weight:700}
 .progress-line{width:50px;height:2px;background:var(--line);flex-shrink:0;margin-top:14px}
-.progress-line.done{background:var(--navy)}
+.progress-line.done{background:rgba(165,216,255,.65)}
 
 .app-card-body{padding:16px 20px;display:grid;grid-template-columns:repeat(3,1fr);gap:14px;border-bottom:1px solid var(--line)}
 .detail-item{display:flex;flex-direction:column;gap:3px}
@@ -100,7 +100,7 @@ $topbar_action_icon  = 'plus';
 .status-msg.warn{color:var(--warning)}
 .status-msg.danger{color:var(--danger)}
 .footer-actions{display:flex;gap:10px;align-items:center;flex-shrink:0}
-.btn-view-details{display:inline-flex;align-items:center;gap:6px;padding:7px 14px;border-radius:var(--radius-sm);background:var(--navy);color:#fff;font-size:.78rem;font-weight:700;border:none;cursor:pointer;font-family:var(--font)}
+.btn-view-details{display:inline-flex;align-items:center;gap:6px;padding:7px 14px;border-radius:var(--radius-sm);background:rgba(255,255,255,.18);color:#fff;font-size:.78rem;font-weight:700;border:none;cursor:pointer;font-family:var(--font)}
 .btn-view-details:hover{background:var(--navy-mid)}
 .btn-view-details i{width:14px;height:14px}
 .apply-again{display:inline-flex;align-items:center;gap:4px;font-size:.8rem;font-weight:700;color:var(--navy-light)}
@@ -108,7 +108,7 @@ $topbar_action_icon  = 'plus';
 
 .empty-state{background:var(--white);border:1px solid var(--line);border-radius:var(--radius);padding:56px 20px}
 .empty-state i{width:40px;height:40px}
-.btn-apply{display:inline-flex;align-items:center;gap:7px;padding:11px 20px;border-radius:var(--radius-sm);background:var(--navy);color:#fff;font-size:.88rem;font-weight:700}
+.btn-apply{display:inline-flex;align-items:center;gap:7px;padding:11px 20px;border-radius:var(--radius-sm);background:rgba(255,255,255,.18);color:#fff;font-size:.88rem;font-weight:700}
 .btn-apply:hover{background:var(--navy-mid)}
 .btn-apply i{width:16px;height:16px;margin:0;color:#fff}
 

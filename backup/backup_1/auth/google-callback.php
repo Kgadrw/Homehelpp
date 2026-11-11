@@ -9,7 +9,7 @@ $google_redirect_uri  = GOOGLE_REDIRECT_URI !== '' ? GOOGLE_REDIRECT_URI : 'http
 
 if ($google_client_id === '' || $google_client_secret === '') {
     http_response_code(500);
-    exit('Google OAuth is not configured. Add credentials in config/secrets.php.');
+    exit('Google OAuth is not configured. Add credentials to .env (see .env.example).');
 }
 
 // If already logged in, redirect to dashboard

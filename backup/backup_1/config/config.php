@@ -15,16 +15,50 @@ define('WA_TOKEN',       '');            // ← Paste your permanent token
 define('WA_PHONE_ID',    '');            // ← Your Phone Number ID from Meta
 define('ADMIN_WHATSAPP', '250790533144');// ← Admin WhatsApp (no + or spaces)
 
-// ── SECRETS (optional — uses project config/secrets.php) ──
-$__secrets = __DIR__ . '/../../../config/secrets.php';
-if (is_file($__secrets)) {
-    require_once $__secrets;
-}
+// ── .ENV (project root) ──────────────────────────────────────
+(static function (): void {
+    $envFile = dirname(__DIR__, 3) . DIRECTORY_SEPARATOR . '.env';
+    if (!is_file($envFile) || !is_readable($envFile)) {
+        return;
+    }
+    $lines = file($envFile, FILE_IGNORE_NEW_LINES);
+    if ($lines === false) {
+        return;
+    }
+    foreach ($lines as $line) {
+        $line = trim($line);
+        if ($line === '' || str_starts_with($line, '#') || !str_contains($line, '=')) {
+            continue;
+        }
+        [$name, $value] = explode('=', $line, 2);
+        $name  = trim($name);
+        $value = trim($value);
+        if ($name === '' || !preg_match('/^[A-Z_][A-Z0-9_]*$/i', $name)) {
+            continue;
+        }
+        if (
+            (str_starts_with($value, '"') && str_ends_with($value, '"'))
+            || (str_starts_with($value, "'") && str_ends_with($value, "'"))
+        ) {
+            $value = substr($value, 1, -1);
+        }
+        if (getenv($name) === false) {
+            putenv($name . '=' . $value);
+            $_ENV[$name] = $value;
+        }
+    }
+})();
 
 // ── GOOGLE OAUTH ─────────────────────────────────────────────
-if (!defined('GOOGLE_CLIENT_ID'))     define('GOOGLE_CLIENT_ID', '');
-if (!defined('GOOGLE_CLIENT_SECRET')) define('GOOGLE_CLIENT_SECRET', '');
-if (!defined('GOOGLE_REDIRECT_URI'))  define('GOOGLE_REDIRECT_URI', BASE_URL . '/auth/google-callback.php');
+if (!defined('GOOGLE_CLIENT_ID')) {
+    define('GOOGLE_CLIENT_ID', (string)(getenv('GOOGLE_CLIENT_ID') ?: ''));
+}
+if (!defined('GOOGLE_CLIENT_SECRET')) {
+    define('GOOGLE_CLIENT_SECRET', (string)(getenv('GOOGLE_CLIENT_SECRET') ?: ''));
+}
+if (!defined('GOOGLE_REDIRECT_URI')) {
+    define('GOOGLE_REDIRECT_URI', (string)(getenv('GOOGLE_REDIRECT_URI') ?: (BASE_URL . '/auth/google-callback.php')));
+}
 
 // ── FILE UPLOADS ─────────────────────────────────────────────
 define('MAX_UPLOAD_SIZE', 5 * 1024 * 1024); // 5 MB

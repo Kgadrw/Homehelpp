@@ -39,7 +39,7 @@ function sendResetEmail($to_email, $to_name, $reset_link) {
     </p>
   </div>
   <div style='background:#F2EDE3;padding:20px 40px;text-align:center'>
-    <p style='color:#888;font-size:12px;margin:0'>© " . date('Y') . " Home Help · Brilliant Elite Ltd · Kigali, Rwanda 🇷🇼</p>
+    <p style='color:#888;font-size:12px;margin:0'>© " . date('Y') . " Home Help · HomeHelp Ltd · Kigali, Rwanda 🇷🇼</p>
   </div>
 </div>
 </body>
@@ -242,147 +242,10 @@ elseif (isset($_GET['token'])) {
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
 <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet"/>
 <script src="https://unpkg.com/lucide@0.468.0/dist/umd/lucide.min.js"></script>
-<style>
-:root{
-  --navy:#0D1B4B;
-  --navy-mid:#152268;
-  --navy-light:#2E5FC2;
-  --line:#E6E2D8;
-  --bg:#FAFAF8;
-  --text:#111827;
-  --muted:#6B7280;
-  --white:#FFFFFF;
-  --font:'Plus Jakarta Sans',sans-serif;
-}
-*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-html,body{height:100%;font-family:var(--font);background:var(--bg);color:var(--text);-webkit-font-smoothing:antialiased}
-a{text-decoration:none;color:inherit}
-.auth-wrap{display:grid;grid-template-columns:1fr 1fr;min-height:100vh}
-
-.auth-left{position:relative;overflow:hidden;background:var(--navy)}
-.auth-left-img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center;display:block}
-.back-home{
-  position:absolute;top:28px;left:28px;z-index:2;
-  display:inline-flex;align-items:center;gap:6px;
-  font-size:0.875rem;font-weight:600;color:rgba(255,255,255,0.95);
-  padding:8px 12px 8px 10px;border-radius:999px;
-  background:rgba(13,27,75,0.4);backdrop-filter:blur(8px);
-  transition:background .15s,color .15s;
-}
-.back-home i{width:16px;height:16px;stroke-width:2}
-.back-home:hover{background:rgba(13,27,75,0.6);color:#fff}
-
-.auth-right{display:flex;align-items:center;justify-content:center;padding:40px 32px;background:var(--bg)}
-.auth-card{width:100%;max-width:380px}
-.back-home-mobile{
-  display:none;align-items:center;gap:6px;
-  font-size:0.875rem;font-weight:500;color:var(--muted);
-  margin:0 auto 20px;width:fit-content;transition:color .15s;
-}
-.back-home-mobile i{width:16px;height:16px;stroke-width:2}
-.back-home-mobile:hover{color:var(--navy)}
-.auth-brand{display:block;width:56px;height:56px;margin:0 auto 28px;line-height:0}
-.auth-brand img{width:100%;height:100%;object-fit:contain;border-radius:50%}
-
-.auth-card h1{
-  font-size:1.75rem;font-weight:800;letter-spacing:-0.03em;
-  color:var(--navy);margin-bottom:8px;line-height:1.2;
-}
-.auth-card .sub{font-size:0.95rem;color:var(--muted);margin-bottom:32px;line-height:1.5}
-.auth-card .sub a{color:var(--navy-light);font-weight:600}
-.auth-card .sub a:hover{text-decoration:underline}
-.auth-card .sub strong{color:var(--text);font-weight:600}
-
-.alert{
-  display:flex;align-items:flex-start;gap:10px;
-  padding:12px 14px;margin-bottom:20px;border-radius:10px;
-  background:#FEF2F2;border:1px solid #FECACA;color:#B91C1C;
-  font-size:0.875rem;line-height:1.45;
-}
-.alert i{width:18px;height:18px;flex-shrink:0;margin-top:1px}
-
-.form-group{margin-bottom:16px}
-.form-group label{display:block;font-size:0.8125rem;font-weight:600;color:var(--text);margin-bottom:7px}
-.input-wrap{position:relative}
-.input-icon{position:absolute;left:14px;top:50%;transform:translateY(-50%);color:var(--muted);display:flex;pointer-events:none}
-.input-icon i{width:18px;height:18px;stroke-width:2}
-.form-group input{
-  width:100%;padding:13px 44px;border:1px solid var(--line);border-radius:10px;
-  font-family:var(--font);font-size:0.9375rem;color:var(--text);
-  background:var(--white);outline:none;transition:border-color .15s,box-shadow .15s;
-}
-.form-group input:focus{border-color:var(--navy-light);box-shadow:0 0 0 3px rgba(46,95,194,.12)}
-.form-group input.error-field{border-color:#ef4444;box-shadow:0 0 0 3px rgba(239,68,68,.1)}
-.eye-toggle{
-  position:absolute;right:10px;top:50%;transform:translateY(-50%);
-  border:0;background:transparent;color:var(--muted);cursor:pointer;
-  padding:6px;display:flex;border-radius:6px;
-}
-.eye-toggle:hover{color:var(--navy)}
-.eye-toggle i{width:18px;height:18px;stroke-width:2}
-
-.strength-bar{display:grid;grid-template-columns:repeat(4,1fr);gap:4px;margin-top:8px}
-.strength-seg{height:3px;border-radius:2px;background:var(--line);transition:background .3s}
-.strength-seg.weak{background:#ef4444}.strength-seg.fair{background:#f59e0b}.strength-seg.good{background:#22c55e}
-.strength-text{display:block;font-size:0.75rem;color:var(--muted);margin-top:4px}
-
-.btn-submit{
-  width:100%;display:inline-flex;align-items:center;justify-content:center;gap:8px;
-  padding:14px 18px;border:0;border-radius:999px;cursor:pointer;
-  background:var(--navy);color:var(--white);
-  font-family:var(--font);font-size:0.9375rem;font-weight:700;
-  transition:background .15s,transform .15s;
-}
-.btn-submit i{width:18px;height:18px;stroke-width:2.25}
-.btn-submit:hover{background:var(--navy-mid)}
-.btn-submit.loading{opacity:.7;pointer-events:none}
-
-.state-icon{
-  width:56px;height:56px;border-radius:50%;margin:0 auto 20px;
-  display:flex;align-items:center;justify-content:center;
-  background:#EEF2FF;color:var(--navy);
-}
-.state-icon.ok{background:#ECFDF5;color:#059669}
-.state-icon i{width:26px;height:26px;stroke-width:2}
-.state-center{text-align:center}
-.sent-note{
-  display:flex;align-items:flex-start;gap:10px;margin-top:20px;text-align:left;
-  padding:12px 14px;border-radius:10px;background:#F3F4F6;
-  font-size:0.8125rem;color:var(--muted);line-height:1.55;
-}
-.sent-note i{width:16px;height:16px;flex-shrink:0;margin-top:2px;stroke-width:2}
-.sent-note a{color:var(--navy-light);font-weight:600}
-.sent-note a:hover{text-decoration:underline}
-
-.auth-links{margin-top:28px;padding-top:24px;border-top:1px solid var(--line)}
-.auth-links a{
-  display:flex;align-items:center;gap:8px;
-  font-size:0.875rem;color:var(--muted);font-weight:500;
-  margin-bottom:12px;transition:color .15s;
-}
-.auth-links a:last-child{margin-bottom:0}
-.auth-links a:hover{color:var(--navy)}
-.auth-links a i{width:16px;height:16px;stroke-width:2}
-
-@media(max-width:900px){
-  .auth-wrap{grid-template-columns:1fr}
-  .auth-left{display:none}
-  .auth-right{padding:32px 20px}
-  .back-home-mobile{display:inline-flex}
-  .auth-brand{width:48px;height:48px;margin-bottom:24px}
-}
-</style>
 </head>
 <body>
+<?php include __DIR__ . '/../includes/auth-glass-shell.php'; ?>
 <div class="auth-wrap">
-
-  <div class="auth-left">
-    <a href="<?= BASE_URL ?>" class="back-home">
-      <i data-lucide="arrow-left"></i> Back to home
-    </a>
-    <img class="auth-left-img" src="../Image/slider/Slider_3.jpeg" alt=""/>
-  </div>
-
   <div class="auth-right">
     <div class="auth-card">
       <a href="<?= BASE_URL ?>" class="back-home-mobile">

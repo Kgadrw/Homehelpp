@@ -19,6 +19,7 @@ $routes = [
     '/worker-login'    => 'auth/workerlogin.php',
     '/worker-login-api'=> 'auth/worker-login-api.php',
     '/worker-register' => 'auth/workerregister.php',
+    '/worker-register-api'=> 'auth/worker-register-api.php',
     '/staff-login'     => 'auth/adminlogin.php',
     '/admin-login'     => 'auth/adminlogin.php',
     '/admin'               => 'admin/dashboard.php',

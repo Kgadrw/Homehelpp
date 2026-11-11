@@ -3,37 +3,60 @@
 //  Home Help — App Config & Helper Functions
 //  File: config/config.php
 //  DevGuide §1.4, §3.1, §5.2, §6.1, §10.2
-//  Brilliant Elite Ltd · Rwanda 🇷🇼
+//  HomeHelp Ltd · Rwanda 🇷🇼
 // ============================================================
+
+require_once __DIR__ . '/env.php';
+
+// Optional legacy override (prefer .env)
+if (is_file(__DIR__ . '/secrets.php')) {
+    require_once __DIR__ . '/secrets.php';
+}
 
 // ── APP ─────────────────────────────────────────────────────
 $__is_local = in_array($_SERVER['HTTP_HOST'] ?? '', ['localhost', '127.0.0.1', 'localhost:8000', '127.0.0.1:8000'], true)
     || str_starts_with($_SERVER['HTTP_HOST'] ?? '', 'localhost:')
     || str_starts_with($_SERVER['HTTP_HOST'] ?? '', '127.0.0.1:');
-define('BASE_URL', $__is_local
+$__base_default = $__is_local
     ? ((isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off' ? 'https' : 'http') . '://' . ($_SERVER['HTTP_HOST'] ?? 'localhost:8000'))
-    : 'https://homehelp.rw'
-);
-define('SITE_NAME',  'Home Help');
+    : 'https://homehelp.rw';
+if (!defined('BASE_URL'))  define('BASE_URL',  rtrim(hh_env('BASE_URL', $__base_default), '/'));
+if (!defined('SITE_NAME')) define('SITE_NAME', hh_env('SITE_NAME', 'Home Help'));
+if (!defined('SITE_URL'))  define('SITE_URL',  rtrim(hh_env('SITE_URL', 'https://homehelp.rw'), '/'));
 
-// ── WHATSAPP (Meta Cloud API) ────────────────────────────────
-define('WA_TOKEN',       '');            // ← Paste your permanent token
-define('WA_PHONE_ID',    '');            // ← Your Phone Number ID from Meta
-define('ADMIN_WHATSAPP', '250790533144');// ← Admin WhatsApp (no + or spaces)
-
-// ── SECRETS (optional local override — see config/secrets.example.php) ──
-if (is_file(__DIR__ . '/secrets.php')) {
-    require_once __DIR__ . '/secrets.php';
-}
+// ── WHATSAPP ─────────────────────────────────────────────────
+// Meta Cloud API (used by config helpers) + wa-api.me (includes/whatsapp.php)
+if (!defined('WA_TOKEN'))        define('WA_TOKEN',        hh_env('WA_TOKEN'));
+if (!defined('WA_PHONE_ID'))     define('WA_PHONE_ID',     hh_env('WA_PHONE_ID'));
+if (!defined('WA_API_ME_TOKEN')) define('WA_API_ME_TOKEN', hh_env('WA_API_ME_TOKEN'));
+if (!defined('ADMIN_WHATSAPP'))  define('ADMIN_WHATSAPP',  hh_env('ADMIN_WHATSAPP', '250790533144'));
 
 // ── GOOGLE OAUTH ─────────────────────────────────────────────
-if (!defined('GOOGLE_CLIENT_ID'))     define('GOOGLE_CLIENT_ID', '');
-if (!defined('GOOGLE_CLIENT_SECRET')) define('GOOGLE_CLIENT_SECRET', '');
+if (!defined('GOOGLE_CLIENT_ID')) {
+    define('GOOGLE_CLIENT_ID', hh_env('GOOGLE_CLIENT_ID'));
+}
+if (!defined('GOOGLE_CLIENT_SECRET')) {
+    define('GOOGLE_CLIENT_SECRET', hh_env('GOOGLE_CLIENT_SECRET'));
+}
 // Must match Google Cloud Console authorized redirect URI exactly.
-if (!defined('GOOGLE_REDIRECT_URI'))  define('GOOGLE_REDIRECT_URI', 'https://homehelp.rw/google-login');
+if (!defined('GOOGLE_REDIRECT_URI')) {
+    define('GOOGLE_REDIRECT_URI', hh_env('GOOGLE_REDIRECT_URI', 'https://homehelp.rw/google-login'));
+}
+
+// ── SMTP / EMAIL ─────────────────────────────────────────────
+if (!defined('SMTP_HOST'))         define('SMTP_HOST',         hh_env('SMTP_HOST', 'mail.homehelp.rw'));
+if (!defined('SMTP_PORT'))         define('SMTP_PORT',         (int)hh_env('SMTP_PORT', '465'));
+if (!defined('SMTP_USER'))         define('SMTP_USER',         hh_env('SMTP_USER', 'bookings@homehelp.rw'));
+if (!defined('SMTP_PASS'))         define('SMTP_PASS',         hh_env('SMTP_PASS'));
+if (!defined('MAIL_FROM_NAME'))    define('MAIL_FROM_NAME',    hh_env('MAIL_FROM_NAME', 'Home Help Rwanda'));
+if (!defined('MAIL_CONTACT_EMAIL'))define('MAIL_CONTACT_EMAIL',hh_env('MAIL_CONTACT_EMAIL', 'info@homehelp.rw'));
+if (!defined('MAIL_CONTACT_PHONE'))define('MAIL_CONTACT_PHONE',hh_env('MAIL_CONTACT_PHONE', '+250 790 533 144'));
+if (!defined('MAIL_ADDRESS'))      define('MAIL_ADDRESS',      hh_env('MAIL_ADDRESS', 'Kigali, Rwanda'));
 
 // ── FILE UPLOADS ─────────────────────────────────────────────
-define('MAX_UPLOAD_SIZE', 5 * 1024 * 1024); // 5 MB
+if (!defined('MAX_UPLOAD_SIZE')) {
+    define('MAX_UPLOAD_SIZE', (int)hh_env('MAX_UPLOAD_SIZE', (string)(5 * 1024 * 1024)));
+}
 
 // ── SESSION ──────────────────────────────────────────────────
 if (session_status() === PHP_SESSION_NONE) {

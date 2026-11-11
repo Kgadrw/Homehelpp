@@ -79,19 +79,25 @@ $logo = BASE_URL . '/Image/homehelp-logo.png';
 $user_block_bottom = ($dash_role === 'provider');
 $hide_user_block   = in_array($dash_role, ['agent', 'admin'], true);
 ?>
+<?php if (empty($GLOBALS['__hh_dash_glass_shell'])): $GLOBALS['__hh_dash_glass_shell'] = true; ?>
+<div class="page-ascii-bg" id="heroAscii" aria-hidden="true"></div>
+<div class="page-ascii-veil" aria-hidden="true"></div>
+<?php endif; ?>
 <div class="dash-wrap">
   <div class="sidebar-overlay" id="sidebarOverlay" onclick="closeSidebar()"></div>
   <aside class="sidebar" id="sidebar">
-    <a href="<?= BASE_URL ?>" class="sidebar-logo">
+    <div class="sidebar-logo" aria-label="Home Help">
       <img src="<?= $logo ?>" alt="Home Help"/>
       <span>HomeHelp</span>
-    </a>
+    </div>
     <?php if (!$user_block_bottom && !$hide_user_block): ?>
     <div class="sidebar-user">
       <div class="user-avatar"><?= htmlspecialchars($initial) ?></div>
       <div class="user-info">
         <strong><?= htmlspecialchars($user_name) ?></strong>
+        <?php if ($dash_role !== 'client'): ?>
         <span><?= htmlspecialchars($role_label) ?></span>
+        <?php endif; ?>
       </div>
     </div>
     <?php endif; ?>
@@ -118,29 +124,10 @@ $hide_user_block   = in_array($dash_role, ['agent', 'admin'], true);
         </div>
       </div>
       <?php endif; ?>
-      <a href="<?= BASE_URL ?>/logout" class="btn-logout"><i data-lucide="log-out"></i> Sign Out</a>
+      <a href="<?= BASE_URL ?>/logout" class="btn-logout" id="dashLogoutBtn"><i data-lucide="log-out"></i> Sign Out</a>
     </div>
   </aside>
 
   <div class="main">
-    <header class="topbar">
-      <div class="topbar-left">
-        <button class="burger" type="button" onclick="toggleSidebar()" aria-label="Menu"><span></span><span></span><span></span></button>
-        <span class="topbar-title"><?= htmlspecialchars($page_heading) ?></span>
-      </div>
-      <div class="topbar-right">
-        <?php if ($notif_count > 0 || isset($show_notif)): ?>
-          <a href="#notifications" class="topbar-notif" title="Notifications">
-            <i data-lucide="bell"></i>
-            <?php if ($notif_count > 0): ?><span class="notif-dot"></span><?php endif; ?>
-          </a>
-        <?php endif; ?>
-        <?php if (!empty($topbar_action_href)): ?>
-          <a href="<?= htmlspecialchars($topbar_action_href) ?>" class="btn-primary-sm">
-            <?php if (!empty($topbar_action_icon)): ?><i data-lucide="<?= htmlspecialchars($topbar_action_icon) ?>"></i><?php endif; ?>
-            <?= htmlspecialchars($topbar_action_label ?? 'Action') ?>
-          </a>
-        <?php endif; ?>
-      </div>
-    </header>
+    <button class="burger dash-menu-btn" type="button" onclick="toggleSidebar()" aria-label="Menu"><span></span><span></span><span></span></button>
     <div class="content">

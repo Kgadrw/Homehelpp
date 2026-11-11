@@ -67,8 +67,8 @@ $badge_pending = (int)$stats['pending'];
 .stats-grid.cols-3{grid-template-columns:repeat(3,1fr)}
 .quick-actions.cols-2{grid-template-columns:repeat(2,1fr)}
 .welcome-banner{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:16px}
-.welcome-btn{display:inline-flex;align-items:center;gap:8px;padding:10px 18px;border-radius:10px;background:#fff;color:var(--navy);font-size:.84rem;font-weight:700}
-.welcome-btn:hover{background:var(--navy-soft)}
+.welcome-btn{display:inline-flex;align-items:center;gap:8px;padding:10px 18px;border-radius:999px;background:rgba(255,255,255,.16);color:#fff;font-size:.84rem;font-weight:700;border:none;box-shadow:none;backdrop-filter:blur(12px)}
+.welcome-btn:hover{background:rgba(255,255,255,.24)}
 .welcome-btn i{width:16px;height:16px}
 .section-title{font-size:1rem;font-weight:800;color:var(--navy);letter-spacing:-.01em;margin-bottom:12px}
 .latest-card{margin-bottom:20px}

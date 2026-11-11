@@ -20,71 +20,87 @@ $hh_wl_google = rtrim(BASE_URL, '/') . '/google-login?role=provider';
 $hh_wl_next   = (isset($_GET['next']) && is_string($_GET['next'])) ? $_GET['next'] : '';
 ?>
 <style>
-.hh-wl-root{--hh-navy:#0D1B4B;--hh-navy-mid:#152268;--hh-blue:#2E5FC2;--hh-line:#E8E4DC;--hh-bg:#FAFAF8;--hh-text:#111827;--hh-muted:#6B7280;--hh-white:#fff;--hh-danger:#DC2626;--hh-font:'Plus Jakarta Sans',system-ui,sans-serif}
+.hh-wl-root{--hh-navy:#fff;--hh-navy-mid:#A5D8FF;--hh-blue:#A5D8FF;--hh-line:rgba(255,255,255,.14);--hh-bg:rgba(255,255,255,.08);--hh-text:#fff;--hh-muted:rgba(255,255,255,.65);--hh-white:rgba(255,255,255,.1);--hh-danger:#FCA5A5;--hh-font:'Plus Jakarta Sans',system-ui,sans-serif}
 .hh-wl-root[hidden]{display:none!important}
-.hh-wl-root{position:fixed;inset:0;z-index:10002;display:flex;align-items:center;justify-content:center;padding:20px 14px;font-family:var(--hh-font)}
-.hh-wl-backdrop{position:absolute;inset:0;background:rgba(13,27,75,.55);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);border:0;cursor:pointer}
+.hh-wl-root{position:fixed;inset:0;z-index:10002;display:flex;align-items:center;justify-content:center;padding:20px 14px;font-family:var(--hh-font);color-scheme:dark}
+.hh-wl-backdrop{position:absolute;inset:0;background:rgba(0,0,0,.55);backdrop-filter:blur(18px) saturate(140%);-webkit-backdrop-filter:blur(18px) saturate(140%);border:0;cursor:pointer}
 .hh-wl-dialog{
   position:relative;width:100%;max-width:400px;max-height:min(92vh,680px);overflow:auto;
-  background:var(--hh-white);border-radius:16px;box-shadow:0 20px 60px rgba(13,27,75,.28);
-  padding:28px 28px 24px;animation:hhWlIn .22s ease both;
+  background:linear-gradient(160deg,rgba(255,255,255,.18),rgba(255,255,255,.07));
+  backdrop-filter:blur(36px) saturate(170%);-webkit-backdrop-filter:blur(36px) saturate(170%);
+  border:none;border-radius:28px;box-shadow:inset 0 1px 0 rgba(255,255,255,.22),0 24px 80px rgba(0,0,0,.35);
+  padding:32px 28px 26px;animation:hhWlIn .26s cubic-bezier(.22,1,.36,1) both;color:#fff;
 }
-@keyframes hhWlIn{from{opacity:0;transform:translateY(10px) scale(.98)}to{opacity:1;transform:none}}
+@keyframes hhWlIn{from{opacity:0;transform:translateY(16px) scale(.97)}to{opacity:1;transform:none}}
 .hh-wl-close{
-  position:absolute;top:12px;right:12px;width:34px;height:34px;border-radius:8px;
-  border:1px solid var(--hh-line);background:var(--hh-bg);color:var(--hh-muted);cursor:pointer;
+  position:absolute;top:14px;right:14px;width:36px;height:36px;border-radius:999px;
+  border:none;background:rgba(255,255,255,.12);color:rgba(255,255,255,.75);cursor:pointer;
   display:inline-flex;align-items:center;justify-content:center;
+  backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);
 }
-.hh-wl-close:hover{color:var(--hh-navy);border-color:#C9D4EE}
+.hh-wl-close:hover{color:#fff;background:rgba(255,255,255,.2)}
 .hh-wl-close svg{width:16px;height:16px;stroke-width:2.25}
-.hh-wl-brand{display:block;width:44px;height:44px;margin:0 auto 14px;line-height:0}
-.hh-wl-brand img{width:100%;height:100%;object-fit:contain;border-radius:50%}
-.hh-wl-dialog h2{margin:0 0 6px;text-align:center;font-size:1.35rem;font-weight:800;letter-spacing:-.03em;color:var(--hh-navy);line-height:1.25}
-.hh-wl-sub{margin:0 0 18px;text-align:center;font-size:.875rem;color:var(--hh-muted);line-height:1.45}
+.hh-wl-brand{display:none}
+.hh-wl-dialog h2{margin:0 0 8px;text-align:left;font-size:1.45rem;font-weight:800;letter-spacing:-.03em;color:#fff;line-height:1.15}
+.hh-wl-sub{margin:0 0 20px;text-align:left;font-size:.9rem;color:rgba(255,255,255,.62);line-height:1.5;font-weight:500}
 .hh-wl-sub a{color:var(--hh-blue);font-weight:600;text-decoration:none}
 .hh-wl-sub a:hover{text-decoration:underline}
 .hh-wl-alert{
-  display:none;align-items:flex-start;gap:8px;padding:10px 12px;margin-bottom:14px;border-radius:10px;
-  background:#FEF2F2;border:1px solid #FECACA;color:#B91C1C;font-size:.8125rem;line-height:1.4
+  display:none;align-items:flex-start;gap:8px;padding:10px 12px;margin-bottom:14px;border-radius:12px;
+  background:rgba(254,242,242,.18);border:none;color:#FECACA;font-size:.8125rem;line-height:1.4;
+  backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);
 }
 .hh-wl-alert.is-on{display:flex}
 .hh-wl-google{
   width:100%;display:flex;align-items:center;justify-content:center;gap:10px;
-  padding:11px 14px;margin-bottom:14px;border-radius:10px;border:1px solid var(--hh-line);
-  background:var(--hh-white);color:var(--hh-text);font:inherit;font-size:.875rem;font-weight:600;
-  text-decoration:none;cursor:pointer;transition:border-color .15s,background .15s
+  padding:11px 14px;margin-bottom:14px;border-radius:999px;border:none;
+  background:rgba(255,255,255,.12);color:#fff;font:inherit;font-size:.875rem;font-weight:600;
+  text-decoration:none;cursor:pointer;transition:background .15s;
+  backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);box-shadow:none;
 }
-.hh-wl-google:hover{border-color:#C9D4EE;background:var(--hh-bg)}
+.hh-wl-google:hover{background:rgba(255,255,255,.2)}
 .hh-wl-google svg{width:18px;height:18px}
 .hh-wl-div{display:flex;align-items:center;gap:12px;margin:0 0 14px;color:var(--hh-muted);font-size:.75rem;font-weight:500}
 .hh-wl-div::before,.hh-wl-div::after{content:'';flex:1;height:1px;background:var(--hh-line)}
 .hh-wl-field{display:flex;flex-direction:column;gap:6px;margin-bottom:12px}
-.hh-wl-field label{font-size:.78rem;font-weight:600;color:var(--hh-text)}
+.hh-wl-field label{font-size:.78rem;font-weight:650;color:#fff;letter-spacing:-.01em}
 .hh-wl-field .wrap{position:relative}
 .hh-wl-field input{
-  width:100%;padding:11px 12px;border:1px solid var(--hh-line);border-radius:10px;
-  font:inherit;font-size:.9rem;color:var(--hh-text);background:var(--hh-white);outline:none;
-  transition:border-color .15s,box-shadow .15s
+  width:100%;padding:13px 15px;border:none;border-radius:16px;color-scheme:dark;
+  font:inherit;font-size:.92rem;font-weight:500;color:#fff;outline:none;
+  background:linear-gradient(135deg,rgba(255,255,255,.16),rgba(255,255,255,.07));
+  backdrop-filter:blur(14px) saturate(150%);-webkit-backdrop-filter:blur(14px) saturate(150%);
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.18);transition:box-shadow .15s,background .15s
 }
-.hh-wl-field input:focus{border-color:var(--hh-blue);box-shadow:0 0 0 3px rgba(46,95,194,.12)}
-.hh-wl-field input.is-bad{border-color:var(--hh-danger);box-shadow:0 0 0 3px rgba(220,38,38,.1)}
+.hh-wl-field input:focus{background:rgba(255,255,255,.2);box-shadow:inset 0 1px 0 rgba(255,255,255,.24),0 0 0 3px rgba(165,216,255,.22)}
+.hh-wl-field input.is-bad{box-shadow:0 0 0 2px rgba(252,165,165,.5)}
+.hh-wl-field input::placeholder{color:rgba(255,255,255,.38)}
 .hh-wl-eye{
   position:absolute;right:8px;top:50%;transform:translateY(-50%);border:0;background:transparent;
-  color:var(--hh-muted);cursor:pointer;padding:6px;display:flex;border-radius:6px
+  color:rgba(255,255,255,.55);cursor:pointer;padding:6px;display:flex;border-radius:6px
 }
-.hh-wl-eye:hover{color:var(--hh-navy)}
+.hh-wl-eye:hover{color:#fff}
 .hh-wl-eye svg{width:16px;height:16px;stroke-width:2}
-.hh-wl-meta{display:flex;align-items:center;justify-content:space-between;gap:10px;margin:2px 0 16px;font-size:.78rem}
-.hh-wl-meta label{display:inline-flex;align-items:center;gap:7px;color:var(--hh-muted);cursor:pointer;font-weight:500}
-.hh-wl-meta input{accent-color:var(--hh-navy)}
-.hh-wl-meta a{color:var(--hh-blue);font-weight:600;text-decoration:none}
+.hh-wl-meta{display:flex;align-items:center;justify-content:space-between;gap:10px;margin:2px 0 18px;font-size:.78rem}
+.hh-wl-meta label{display:inline-flex;align-items:center;gap:9px;color:#fff;cursor:pointer;font-weight:550}
+.hh-wl-meta input[type=checkbox]{
+  appearance:none;-webkit-appearance:none;width:18px;height:18px;margin:0;flex-shrink:0;cursor:pointer;
+  border-radius:6px;border:1px solid rgba(255,255,255,.35);background:rgba(255,255,255,.12);position:relative;
+}
+.hh-wl-meta input[type=checkbox]:checked{background:rgba(165,216,255,.35);border-color:rgba(165,216,255,.65)}
+.hh-wl-meta input[type=checkbox]:checked::after{
+  content:'';position:absolute;left:5px;top:1px;width:5px;height:9px;border:solid #fff;border-width:0 2px 2px 0;transform:rotate(45deg);
+}
+.hh-wl-meta a{color:#A5D8FF;font-weight:650;text-decoration:none}
 .hh-wl-meta a:hover{text-decoration:underline}
 .hh-wl-submit{
-  width:100%;padding:13px 16px;border:0;border-radius:999px;background:var(--hh-navy);color:#fff;
-  font:inherit;font-size:.9375rem;font-weight:700;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;gap:8px;
-  transition:background .15s
+  width:100%;padding:14px 16px;border:0;border-radius:999px;
+  background:rgba(255,255,255,.18);color:#fff;
+  font:inherit;font-size:.95rem;font-weight:750;cursor:pointer;
+  display:inline-flex;align-items:center;justify-content:center;gap:8px;
+  backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);box-shadow:inset 0 1px 0 rgba(255,255,255,.2);transition:background .15s
 }
-.hh-wl-submit:hover{background:var(--hh-navy-mid)}
+.hh-wl-submit:hover{background:rgba(255,255,255,.26)}
 .hh-wl-submit:disabled{opacity:.65;pointer-events:none}
 .hh-wl-submit svg{width:16px;height:16px;stroke-width:2.25}
 @media(max-width:480px){
@@ -103,7 +119,7 @@ $hh_wl_next   = (isset($_GET['next']) && is_string($_GET['next'])) ? $_GET['next
       <img src="<?= htmlspecialchars($hh_wl_logo) ?>" alt="Home Help"/>
     </a>
     <h2 id="hhWlTitle">Job seeker sign in</h2>
-    <p class="hh-wl-sub">Open your worker dashboard. New here? <a href="<?= htmlspecialchars($hh_wl_reg) ?>">Create a free account</a></p>
+    <p class="hh-wl-sub">Open your worker dashboard. New here? <a href="<?= htmlspecialchars($hh_wl_reg) ?>" data-open-worker-register data-hh-wl-close>Create a free account</a></p>
 
     <div class="hh-wl-alert" id="hhWlAlert" role="alert"><span id="hhWlAlertText"></span></div>
 
@@ -168,6 +184,10 @@ $hh_wl_next   = (isset($_GET['next']) && is_string($_GET['next'])) ? $_GET['next
     form.querySelectorAll('input.is-bad').forEach(function(el){ el.classList.remove('is-bad'); });
   }
   function open(){
+    if (window.HomeHelpWorkerRegister) HomeHelpWorkerRegister.close();
+    if (window.HomeHelpLogin) HomeHelpLogin.close();
+    if (window.HomeHelpRegister) HomeHelpRegister.close();
+    if (window.HomeHelpBook) HomeHelpBook.close();
     lastFocus = document.activeElement;
     root.hidden = false;
     document.body.style.overflow = 'hidden';
